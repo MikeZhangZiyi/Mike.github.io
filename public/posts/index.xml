@@ -9,11 +9,14 @@
     <lastBuildDate>Mon, 09 Mar 2026 16:09:29 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/blog/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>My First Post</title>
-      <link>http://localhost:1313/blog/posts/my-first-post/</link>
+      <title>Learning and Practice of Single-Cell Sequencing</title>
+      <link>http://localhost:1313/blog/posts/learning-and-practice-of-single-cell-sequencing/</link>
       <pubDate>Mon, 09 Mar 2026 16:09:29 +0800</pubDate>
-      <guid>http://localhost:1313/blog/posts/my-first-post/</guid>
-      <description>&lt;h1 id=&#34;hello-world&#34;&gt;Hello World&lt;/h1&gt;</description>
+      <guid>http://localhost:1313/blog/posts/learning-and-practice-of-single-cell-sequencing/</guid>
+      <description>&lt;h1 id=&#34;materials-and-methods&#34;&gt;Materials and Methods&lt;/h1&gt;
+&lt;h2 id=&#34;learning-resources-and-workflow-design&#34;&gt;Learning Resources and Workflow Design&lt;/h2&gt;
+&lt;p&gt;To design an appropriate analysis workflow, the overall strategy was developed based on the guidelines provided by Single Cell Best Practices &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;, with particular emphasis on rigorous data quality assessment, batch effect evaluation, and flexible downstream analysis.&lt;/p&gt;
+&lt;p&gt;At the beginning of the analysis, potential batch effects were systematically assessed using exploratory data visualization and metadata inspection. This initial evaluation determined whether samples originated from multiple batches or experimental conditions that could introduce technical variation. Based on this assessment, one of two alternative analysis workflows was selected.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
