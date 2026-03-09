@@ -26,8 +26,7 @@
 &lt;figure id=&#34;fig-sc-workflow&#34; style=&#34;float:right; width:420px; margin-left:20px;&#34;&gt;
   &lt;img src=&#34;https://raw.githubusercontent.com/MikeZhangZiyi/blog/refs/heads/main/public/posts/Single%20Cell/single_cell_workflow_even_bigger.png&#34;&gt;
   &lt;figcaption style=&#34;color:black;&#34;&gt;
-    &lt;strong&gt;Figure 1.&lt;/strong&gt; Overview of the single-cell RNA-seq analysis workflow including preprocessing,
-    normalization, dimensionality reduction, clustering, and cell-type annotation.
+    &lt;strong&gt;Figure 1. Single-cell RNA-seq analysis workflow.&lt;/strong&gt; The adaptive strategy branches based on the presence of batch effects: scVI/scANVI for batch-aware integration and semi-supervised annotation (left branch), versus standard PCA-based analysis with CellTypist or marker-based annotation (right branch).
   &lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;p&gt;At the beginning of the analysis, potential batch effects were systematically assessed using exploratory data visualization and metadata inspection. This initial evaluation determined whether samples originated from multiple batches or experimental conditions that could introduce technical variation. Based on this assessment, one of two alternative analysis workflows was selected.&lt;/p&gt;</description>

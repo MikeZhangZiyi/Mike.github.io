@@ -123,6 +123,16 @@ UMAP projections were used to visualize clustering outcomes, final cell type ann
 
 ## Workflow Validation Using Immune Cell Data
 
+To validate the correctness and robustness of the proposed downstream analysis workflow, we first applied it to a well-characterized immune cell dataset and evaluated the results based on clustering structure and cell type annotation outcomes. Immune cell datasets serve as a standard benchmark due to their well-defined transcriptional heterogeneity and established cell type markers.
+
+Low-dimensional representations learned through PCA (linear dimensionality reduction) and scVI (non-linear generative modeling) produced clear and biologically meaningful cellular clusters in the UMAP embeddings, shown in Figure~\ref{fig:leiden}. The Leiden clustering results showed moderate similarity between the two approaches, with an estimated Adjusted Rand Index (ARI) of approximately 0.60. While PCA-based clustering yielded a larger number of clusters (15 vs. 11 for scVI) and finer subcluster separation, scVI-based clustering produced more compact clusters with sharper boundaries. These differences primarily arise from the distinct methodological properties of the two representation learning strategies—PCA captures maximal variance in a linear manner, whereas scVI models raw counts through a probabilistic framework that accounts for technical variability and non-linear relationships. Despite these variations in cluster number and boundary definition, the overall topological structure and major cell population distributions remained largely consistent, supporting the robustness of the workflow across different representation learning approaches.
+
+<figure id="fig-qc">
+  <img src="https://raw.githubusercontent.com/MikeZhangZiyi/blog/refs/heads/main/content/posts/Single%20Cell/leiden.png">
+  <figcaption style="color:black;">
+    <strong>Figure 3.UMAP embeddings and Leiden clustering results from two representation learning strategies on the immune cell dataset. a</strong>  UMAP visualization colored by Leiden clusters obtained from PCA-based dimensionality reduction (15 clusters). <strong>b </strong>UMAP visualization colored by Leiden clusters obtained from scVI-based latent representation (11 clusters). 
+  </figcaption>
+</figure>
 
 [^1]: HEUMOS L, SCHAAR A C, LANCE C, et al. Best practices for single-cell analysis across modalities[J/OL]. Nature Reviews Genetics, 2023, 24(8): 550-572. [https://oi.org/10.1038/s41576-023-00586-w](https://oi.org/10.1038/s41576-023-00586-w). DOI: [10.1038/s41576-023-00586-w](10.1038/s41576-023-00586-w).
 
