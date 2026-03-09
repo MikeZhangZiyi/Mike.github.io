@@ -1,0 +1,32 @@
+{
+  "name": "my-blog",
+  "version": "1.0.0",
+  "description": "My blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MikeZhangZiyi/Mike.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MikeZhangZiyi/Mike.github.io/issues"
+  },
+  "homepage": "https://github.com/MikeZhangZiyi/Mike.github.io#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.27",
+    "cssnano": "^7.1.3",
+    "normalize.css": "^8.0.1",
+    "postcss": "^8.5.8",
+    "postcss-cli": "^11.0.1",
+    "postcss-import": "^16.1.1",
+    "postcss-nesting": "^14.0.0",
+    "typeface-fira-code": "^1.1.13",
+    "typeface-roboto-slab": "^1.1.13"
+  }
+}

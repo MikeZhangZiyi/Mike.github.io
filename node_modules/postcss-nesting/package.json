@@ -1,0 +1,83 @@
+{
+	"name": "postcss-nesting",
+	"description": "Nest rules inside each other in CSS",
+	"version": "14.0.0",
+	"contributors": [
+		{
+			"name": "Antonio Laguna",
+			"email": "antonio@laguna.es",
+			"url": "https://antonio.laguna.es"
+		},
+		{
+			"name": "Jonathan Neal",
+			"email": "jonathantneal@hotmail.com"
+		},
+		{
+			"name": "Romain Menke",
+			"email": "romainmenke@gmail.com"
+		}
+	],
+	"license": "MIT-0",
+	"funding": [
+		{
+			"type": "github",
+			"url": "https://github.com/sponsors/csstools"
+		},
+		{
+			"type": "opencollective",
+			"url": "https://opencollective.com/csstools"
+		}
+	],
+	"engines": {
+		"node": ">=20.19.0"
+	},
+	"type": "module",
+	"jsdelivr": "dist/index.mjs",
+	"unpkg": "dist/index.mjs",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.mjs"
+		}
+	},
+	"files": [
+		"CHANGELOG.md",
+		"LICENSE.md",
+		"README.md",
+		"dist"
+	],
+	"dependencies": {
+		"@csstools/selector-resolve-nested": "^4.0.0",
+		"@csstools/selector-specificity": "^6.0.0",
+		"postcss-selector-parser": "^7.1.1"
+	},
+	"peerDependencies": {
+		"postcss": "^8.4"
+	},
+	"scripts": {},
+	"homepage": "https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/csstools/postcss-plugins.git",
+		"directory": "plugins/postcss-nesting"
+	},
+	"bugs": "https://github.com/csstools/postcss-plugins/issues",
+	"keywords": [
+		"atrules",
+		"child",
+		"children",
+		"css",
+		"cssnext",
+		"csswg",
+		"nested",
+		"nestings",
+		"postcss",
+		"postcss-plugin",
+		"rules",
+		"selectors",
+		"specifications",
+		"specs",
+		"syntax",
+		"w3c"
+	]
+}

@@ -2,4 +2,6 @@ module github.com/MikeZhangZiyi/blog
 
 go 1.26.1
 
-require github.com/loup-brun/hugo-cite v1.0.0-beta3 // indirect
+require (
+	github.com/schnerring/hugo-theme-gruvbox v0.0.0-20251001122453-81058f53a809 // indirect
+)

@@ -4,11 +4,11 @@ draft = false
 title = 'Learning and Practice of Single-Cell Sequencing'
 +++
 <div style="
-  text-align: justify;    
-  line-height: 1.6;       
-  hyphens: auto;          
+  text-align: justify;
+  line-height: 1.6;
+  hyphens: auto;
   word-break: break-all;  
-  max-width: 100%;        
+  max-width: 100%;
 ">
 
 

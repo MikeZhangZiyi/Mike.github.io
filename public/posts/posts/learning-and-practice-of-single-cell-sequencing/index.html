@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head><script src="/blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=blog/livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <script>
+    (function() {
+        
+        
+        const autoTheme = false;
+        if (autoTheme) {
+            document.documentElement.setAttribute('data-auto-theme', 'true');
+        }
+
+        const theme = localStorage.getItem('cleanwhite-theme') ||
+                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+    })();
+    </script>
+
+    
+    <meta property="og:site_name" content="Mike&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="http://localhost:1313/blog//img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="http://localhost:1313/blog//img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="Learning and Practice of Single-Cell Sequencing" />
+    <meta property="og:title" content="Learning and Practice of Single-Cell Sequencing" />
+    <meta property="twitter:title" content="Learning and Practice of Single-Cell Sequencing" />
+    
+
+    
+    <meta name="description" content="Recording life, technology and essays">
+    <meta property="og:description" content="Recording life, technology and essays" />
+    <meta property="twitter:description" content="Recording life, technology and essays" />
+    
+
+    <meta property="og:url" content="http://localhost:1313/blog/posts/posts/learning-and-practice-of-single-cell-sequencing/" />
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Single Cell, Bioinformatics, Mike, Blog">
+    <link rel="shortcut icon" href="/blog/img/favicon.ico">
+
+    <title>Learning and Practice of Single-Cell Sequencing | Mike&#39;s Blog | 记录科学与生活</title>
+
+    <link rel="canonical" href="/blog/posts/posts/learning-and-practice-of-single-cell-sequencing/">
+
+    
+
+    
+    <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/blog/css/hugo-theme-cleanwhite.css">
+
+    
+    <link rel="stylesheet" href="/blog/css/theme-variables.css">
+
+    
+    <link rel="stylesheet" href="/blog/css/zanshang.min.css">
+
+    
+    <link rel="stylesheet" href="/blog/css/font-awesome.all.min.css">
+
+    
+    
+    
+    
+
+    
+    <script src="/blog/js/jquery.min.js"></script>
+
+    
+    <script src="/blog/js/bootstrap.min.js"></script>
+
+    
+    <script src="/blog/js/hux-blog.min.js"></script>
+
+    
+    <script src="/blog/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Mike&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                    
+
+		    
+		            <li>
+                        <a href="/blog/search"><i class="fa fa-search"></i></a>
+		           </li>
+                    
+		            <li>
+                        <a href="#" id="theme-toggle" title="Toggle dark mode" style="opacity: 0;">
+                            <i class="fa fa-moon"></i>
+                            <i class="fa fa-sun" style="display: none;"></i>
+                        </a>
+		           </li>
+                    <script>
+                    (function() {
+                        
+                        var theme = localStorage.getItem('cleanwhite-theme') ||
+                                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                        var toggleBtn = document.getElementById('theme-toggle');
+                        if (toggleBtn) {
+                            var moonIcon = toggleBtn.querySelector('.fa-moon');
+                            var sunIcon = toggleBtn.querySelector('.fa-sun');
+
+                            if (theme === 'dark') {
+                                if (moonIcon) moonIcon.style.display = 'none';
+                                if (sunIcon) sunIcon.style.display = 'inline';
+                                toggleBtn.setAttribute('title', 'Switch to light mode');
+                            } else {
+                                if (moonIcon) moonIcon.style.display = 'inline';
+                                if (sunIcon) sunIcon.style.display = 'none';
+                                toggleBtn.setAttribute('title', 'Switch to dark mode');
+                            }
+
+                            
+                            requestAnimationFrame(function() {
+                                toggleBtn.style.transition = 'opacity 0.2s ease';
+                                toggleBtn.style.opacity = '1';
+                            });
+                        }
+                    })();
+                    </script>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        var navLinks = document.querySelectorAll('.navbar-collapse a');
+        navLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                if ($navbar.className.indexOf('in') > 0) {
+                    
+                    $navbar.className = " ";
+                    setTimeout(function(){
+                        if($navbar.className.indexOf('in') < 0) {
+                            $collapse.style.height = "0px"
+                        }
+                    },400)
+                }
+            });
+        });
+    });
+</script>
+
+
+
+<header class="intro-header" style="background-image: url('/blog/img/home-bg-jeep.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>Mike&#39;s Blog </h1>
+                    
+		    <span class="subheading"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+            
+            <div class="
+            col-lg-8 col-lg-offset-1
+            col-md-8 col-md-offset-1
+            col-sm-12
+            col-xs-12
+            post-container">
+            
+                <div style="
+  text-align: justify;
+  line-height: 1.6;
+  hyphens: auto;
+  word-break: break-all;  
+  max-width: 100%;
+">
+<h1 id="materials-and-methods">Materials and Methods</h1>
+<h2 id="learning-resources-and-workflow-design">Learning Resources and Workflow Design</h2>
+<p>To design an appropriate analysis workflow, the overall strategy was developed based on the guidelines provided by Single Cell Best Practices <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, with particular emphasis on rigorous data quality assessment, batch effect evaluation, and flexible downstream analysis.</p>
+<figure id="fig-sc-workflow" style="float:right; width:420px; margin-left:20px;">
+  <img src="https://raw.githubusercontent.com/MikeZhangZiyi/blog/refs/heads/main/public/posts/Single%20Cell/single_cell_workflow_even_bigger.png">
+  <figcaption style="color:black;">
+    <strong>Figure 1. Single-cell RNA-seq analysis workflow.</strong> The adaptive strategy branches based on the presence of batch effects: scVI/scANVI for batch-aware integration and semi-supervised annotation (left branch), versus standard PCA-based analysis with CellTypist or marker-based annotation (right branch).
+  </figcaption>
+</figure>
+<p>At the beginning of the analysis, potential batch effects were systematically assessed using exploratory data visualization and metadata inspection. This initial evaluation determined whether samples originated from multiple batches or experimental conditions that could introduce technical variation. Based on this assessment, one of two alternative analysis workflows was selected.</p>
+<p>When clear batch effects were detected, a latent variable-based integration strategy was adopted using scvi-tools. Specifically, scVI was first applied to learn a batch-corrected latent representation directly from raw count data. To enable reliable cell type annotation, a subset of high-confidence cells was annotated using CellTypist on a log-normalized and highly variable gene-filtered copy of the data. These high-confidence labels were then used to initialize scANVI, which performed semi-supervised learning to propagate cell type annotations across the full dataset while preserving batch correction.</p>
+<p>In contrast, when no obvious batch effects were observed, a standard analysis pipeline was employed. This workflow included quality control, normalization, highly variable gene selection, principal component analysis (PCA), neighborhood graph construction, and clustering using the Leiden algorithm. Cell type annotation was subsequently performed using either automated prediction with CellTypist or manual validation against canonical marker genes, depending on data complexity and annotation confidence.</p>
+<p>The overall workflow design, including both branches (with and without batch effects), is illustrated in Figure<sup><a href="#fig-sc-workflow">1</a></sup>. This adaptive workflow design enabled the selection of the most appropriate analytical strategy according to dataset characteristics, ensuring robust batch integration, reliable cell type annotation, and analytical consistency across different single-cell datasets processed during the study.</p>
+<h2 id="immune-cell-dataset">Immune Cell Dataset</h2>
+<p>The immune cell dataset used in this training was derived from a publicly available 10x Genomics Multiome dataset generated for a single-cell data integration challenge at the NeurIPS 2021 conference<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. The dataset consists of single-cell multiomic profiles from human bone marrow mononuclear cells collected from 12 healthy donors and measured at four different experimental sites, thereby introducing nested batch effects at the full dataset level.</p>
+<p>In this study, only a single subset of the dataset—sample 4 from donor 8—was used for downstream analysis. As this subset originates from a single donor and a single experimental site, no explicit batch effects were expected within the selected data. This subset was therefore suitable for demonstrating standard scRNA-seq preprocessing and downstream analysis following best practices.</p>
+<p>Despite the absence of apparent batch effects, two analytical strategies were applied to this dataset. First, a conventional scRNA-seq workflow based on principal component analysis (PCA) was performed to establish a baseline analysis and cell type annotation. In parallel, a latent variable–based workflow using scVI and scANVI was also applied. This additional analysis was conducted for methodological exploration and to ensure familiarity with batch-aware and semi-supervised modeling approaches, even in scenarios where batch correction is not strictly required.</p>
+<p>By applying both workflows to the same immune cell dataset, this analysis provided a direct comparison of standard and deep learning–based approaches and served as a controlled benchmark for evaluating the behavior of scVI and scANVI under minimal batch effect conditions.</p>
+<h2 id="human-brain-infection-dataset">Human Brain Infection Dataset</h2>
+<p>To further evaluate the applicability of the analysis workflow to a more complex biological context, a human brain infection–related single-cell RNA sequencing dataset was independently selected from a publicly available resource (GSE309815)<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>. This dataset was generated using undirected human cerebral organoids derived from induced pluripotent stem cells (hiPSCs) and was designed to model neural development and host responses to viral infection in vitro.</p>
+<p>The organoids were cultured in spinning bioreactors and divided into three experimental groups, including two infection conditions (MV1-infected and MV2-infected) and an uninfected control group (NBH). Each group was sampled at two 120 and 180 days post-infection, resulting in multiple experimental conditions across infection subtype. Single-cell RNA-seq libraries were prepared using the 10x Genomics Chromium Next GEM Single Cell 3&rsquo; platform and sequenced on an Illumina NovaSeq 6000 system.</p>
+<p>Due to the presence of multiple infection conditions, this dataset was expected to exhibit both biological variability and potential batch effects. Therefore, it provided an appropriate test case for applying batch-aware integration and semi-supervised annotation strategies. The same workflow design principles established during the immune cell analysis were applied to this dataset, including initial quality control, batch effect assessment, and the selection of either a standard PCA-based pipeline or a latent variable–based approach using scVI and scANVI.</p>
+<p>This dataset enabled the exploration of infection-associated transcriptional changes in neural cell populations and served as a realistic and biologically meaningful example for testing the robustness and flexibility of the single-cell analysis workflow.</p>
+<h2 id="data-preprocessing-and-quality-control">Data Preprocessing and Quality Control</h2>
+<p>Quality control (QC) was performed to remove low-quality cells, technical artifacts, and ambient RNA contamination prior to downstream analysis. All QC procedures were conducted using Scanpy and related Python-based single-cell analysis tools.</p>
+<h3 id="cell-level-quality-control">Cell-level Quality Control</h3>
+<p>Mitochondrial genes were identified based on gene names starting with the prefix “MT-”. Ribosomal genes <em>RPS</em>, <em>RPL</em> and hemoglobin genes <em>HB</em> were also annotated for diagnostic purposes. Standard per-cell QC metrics were computed, including total UMI counts, number of detected genes, and the percentage of mitochondrial gene expression. In addition, the fraction of counts contributed by the top 20 most highly expressed genes was calculated to assess transcript dominance.</p>
+<p>QC metrics were saved prior to filtering, and their distributions were visualized using violin plots and scatter plots to facilitate inspection of data quality and threshold selection.</p>
+<p>Low-quality cells were identified using a robust, data-driven outlier detection strategy based on the median absolute deviation (MAD). Cells were flagged as outliers if they deviated beyond five MADs from the median in any of the following log-transformed metrics: total counts, number of detected genes, or the percentage of counts in the top 20 expressed genes. This approach allows automatic identification of extreme values while remaining robust to skewed distributions.</p>
+<p>Mitochondrial outliers were identified separately. Cells were removed if their mitochondrial gene expression exceeded either three MADs above the median or an absolute threshold of 8%, ensuring the exclusion of stressed or dying cells. Cells flagged as either general outliers or mitochondrial outliers were removed from further analysis.</p>
+<p>Post-filtering, QC scatter plots were regenerated to confirm the effectiveness of the filtering procedure.</p>
+<p>After cell-level filtering, raw count data were preserved in a dedicated data layer to maintain access to untransformed counts for downstream modeling and correction steps.</p>
+<figure id="fig-qc">
+  <img src="https://raw.githubusercontent.com/MikeZhangZiyi/blog/refs/heads/main/content/posts/Single%20Cell/qc.png">
+  <figcaption style="color:black;">
+    <strong>Figure 2. Quality control of single-cell RNA-seq data. a</strong>  Violin plots showing the distributions of the number of detected genes, total UMI counts, and mitochondrial gene percentages prior to filtering. <strong>b </strong>Scatter plot of total UMI counts versus mitochondrial gene percentage before quality control. <strong>c </strong> Scatter plot of total UMI counts versus the number of detected genes before filtering. <strong>d </strong> Scatter plot of total UMI counts versus the number of detected genes after quality control.
+  </figcaption>
+</figure>
+<h3 id="ambient-rna-correction-and-gene-filtering">Ambient RNA Correction and Gene Filtering</h3>
+<p>To account for ambient RNA contamination, SoupX was applied using raw and filtered count matrices derived from the original 10x Genomics output. A clustering-based approach was used to estimate contamination levels: cells were first normalized, log-transformed, and embedded using principal component analysis, followed by neighborhood graph construction and Leiden clustering.</p>
+<p>Cluster assignments were supplied to SoupX to improve contamination estimation. Ambient RNA fractions were then automatically inferred, and corrected expression counts were generated. The corrected count matrix replaced the default expression matrix and was additionally stored as a separate data layer for reference.</p>
+<p>Following ambient RNA correction, genes expressed in fewer than 20 cells were removed to eliminate low-information features. This final gene filtering step ensured that downstream analyses focused on biologically meaningful and reliably detected genes.</p>
+<p>Overall, this multi-step QC and preprocessing strategy combined robust outlier detection, visualization-guided assessment, and ambient RNA correction to produce a high-quality single-cell dataset suitable for downstream integration, annotation, and modeling. The overall QC effect was highly satisfactory, as shown in Figure<sup><a href="#fig-qc">2</a></sup>.</p>
+<p>Quality control assessment revealed a high-quality single-cell RNA-seq dataset. The pre-filtering distributions of detected genes, total UMI counts, and mitochondrial gene percentages were well-concentrated with sharp, symmetric peaks and minimal low-quality tails Figure<sup><a href="#fig-qc">2</a></sup>a, indicating low levels of ambient RNA contamination, dying cells, or empty droplets from the outset. Scatter plots further confirmed a clean linear relationship between total counts and detected genes before filtering Figure<sup><a href="#fig-qc">2</a></sup>c, with almost no aberrant clusters of high mitochondrial content at low counts Figure<sup><a href="#fig-qc">2</a></sup>b. After applying standard QC thresholds, the post-filtering distribution became notably tighter and more uniform Figure<sup><a href="#fig-qc">2</a></sup>d, effectively removing the few remaining low-quality cells while preserving the vast majority of informative data. Overall, the QC results are highly satisfactory and demonstrate that the raw data were already of excellent quality, requiring only moderate filtering and setting a strong foundation for reliable downstream analyses such as integration, clustering, and cell type annotation.</p>
+<h2 id="downstream-analysis">Downstream Analysis</h2>
+<p>Following quality control and preprocessing, downstream analyses were conducted within a unified computational framework. The choice of representation learning strategy was conditioned on the presence or absence of batch effects, as assessed using a combination of exploratory visualization and quantitative batch-mixing metrics. This design enabled flexible handling of technical variation while maintaining consistent biological interpretation across datasets.</p>
+<h3 id="representation-learning-strategy-selection">Representation Learning Strategy Selection</h3>
+<p>Datasets were first evaluated for batch effects to guide the selection of appropriate representation learning approaches.</p>
+<p>For datasets exhibiting minimal batch effects, raw expression counts were normalized by scaling total counts per cell to a fixed value, followed by log_1p transformation. Highly variable genes (HVGs) were identified using the Seurat v3 flavor method to prioritize biologically informative features and reduce technical noise. Principal component analysis (PCA) was then applied to the scaled, HVG-filtered expression matrix to derive a low-dimensional embedding suitable for downstream analyses.</p>
+<p>For datasets with detectable batch effects or complex experimental designs, single-cell variational inference (scVI) was applied directly to raw count data without prior normalization, log-transformation, or highly variable gene selection. This generative modeling framework internally accounts for sequencing depth, library size, and batch-associated technical variability through its negative binomial likelihood and latent variable architecture, yielding a batch-corrected and biologically meaningful low-dimensional representation.</p>
+<p>To support cell type annotation, a separate log-normalized data copy was prepared exclusively for automated prediction, providing high-confidence labels for subsequent semi-supervised refinement.</p>
+<h3 id="clustering-and-visualization">Clustering and Visualization</h3>
+<p>Low-dimensional representations obtained from either PCA or the scVI latent space were used to construct a k-nearest neighbor (kNN) graph capturing cell&ndash;cell similarities. Community detection was performed using the Leiden algorithm to identify transcriptionally distinct populations. Uniform Manifold Approximation and Projection (UMAP) was applied to the same embeddings for two-dimensional visualization of cellular structure, cell type distributions, and batch mixing patterns.</p>
+<h3 id="cell-type-annotation-and-semi-supervised-learning">Cell Type Annotation and Semi-Supervised Learning</h3>
+<p>Cell type annotation integrated automated prediction, canonical marker gene validation, and semi-supervised learning.</p>
+<p>For scVI-processed datasets, high-confidence labels derived from automated predictions were used to construct a supervised subset, while low-confidence cells were labeled as <em>unknown</em>. This subset was used to initialize a semi-supervised scANVI model trained on top of the scVI latent representation. scANVI propagated labels to unlabeled cells while preserving batch correction, producing refined cell type assignments across the entire dataset. Posterior probabilities were obtained for all predictions, and cells with low confidence were flagged as ambiguous to avoid over-assignment.</p>
+<p>For PCA-processed datasets with minimal batch effects, cell type annotation relied directly on automated predictions combined with manual validation against established marker genes. Annotation consistency was assessed by examining cluster-specific marker gene expression patterns.</p>
+<h3 id="evaluation-and-visualization-of-results">Evaluation and Visualization of Results</h3>
+<p>UMAP projections were used to visualize clustering outcomes, final cell type annotations, prediction confidence scores, and batch integration quality. Annotation robustness was evaluated by comparing initial automated labels with final semi-supervised assignments and by confirming biological coherence through marker gene expression and cross-dataset consistency checks.</p>
+<h1 id="result">Result</h1>
+<h2 id="workflow-validation-using-immune-cell-data">Workflow Validation Using Immune Cell Data</h2>
+<p>To validate the correctness and robustness of the proposed downstream analysis workflow, we first applied it to a well-characterized immune cell dataset and evaluated the results based on clustering structure and cell type annotation outcomes. Immune cell datasets serve as a standard benchmark due to their well-defined transcriptional heterogeneity and established cell type markers.</p>
+<p>Low-dimensional representations learned through PCA (linear dimensionality reduction) and scVI (non-linear generative modeling) produced clear and biologically meaningful cellular clusters in the UMAP embeddings, shown in Figure<sup><a href="#fig-leiden">3</a></sup>. The Leiden clustering results showed moderate similarity between the two approaches, with an estimated Adjusted Rand Index (ARI) of approximately 0.60. While PCA-based clustering yielded a larger number of clusters (15 vs. 11 for scVI) and finer subcluster separation, scVI-based clustering produced more compact clusters with sharper boundaries. These differences primarily arise from the distinct methodological properties of the two representation learning strategies—PCA captures maximal variance in a linear manner, whereas scVI models raw counts through a probabilistic framework that accounts for technical variability and non-linear relationships. Despite these variations in cluster number and boundary definition, the overall topological structure and major cell population distributions remained largely consistent, supporting the robustness of the workflow across different representation learning approaches.</p>
+<figure id="fig-leiden">
+  <img src="https://raw.githubusercontent.com/MikeZhangZiyi/blog/refs/heads/main/content/posts/Single%20Cell/leiden.png">
+  <figcaption style="color:black;">
+    <strong>Figure 3.UMAP embeddings and Leiden clustering results from two representation learning strategies on the immune cell dataset. a</strong>  UMAP visualization colored by Leiden clusters obtained from PCA-based dimensionality reduction (15 clusters). <strong>b </strong>UMAP visualization colored by Leiden clusters obtained from scVI-based latent representation (11 clusters). 
+  </figcaption>
+</figure>
+<p>To further validate the robustness of the workflow at the level of cell type annotation, we compared annotation outcomes obtained from two complete analysis pipelines: a standard PCA-based workflow followed by automated CellTypist prediction, and a batch-aware semi-supervised workflow based on scVI and scANVI. This comparison was performed on a single-batch immune cell dataset to assess whether both workflows could produce coherent and biologically meaningful annotations under minimal technical confounding, as summarized in Figure<sup><a href="#fig-annotation">4</a></sup>.</p>
+<p>The standard PCA-based workflow produced a complete set of immune cell type labels with clear spatial separation in the UMAP embedding, as shown in Figure<sup><a href="#fig-annotation">4</a></sup>a. These annotations were consistent with known immune cell transcriptional structure and established marker gene patterns. In parallel, the scVI&ndash;scANVI workflow yielded a comparable global annotation landscape in the scVI latent space, shown in Figure<sup><a href="#fig-annotation">4</a></sup>b, while additionally providing posterior probability estimates that explicitly quantified prediction uncertainty, illustrated in Figure<sup><a href="#fig-annotation">4</a></sup>c. Cells with lower prediction confidence were primarily localized at cluster boundaries or transitional regions, indicating appropriate uncertainty modeling rather than overconfident label assignment.</p>
+<p>Despite differences in representation learning strategies and neighborhood graph construction, the two workflows exhibited a high degree of concordance in major immune cell type assignments. This agreement is visualized in Figure<sup><a href="#fig-annotation">4</a></sup>d, where concordant and discordant annotations between workflows are highlighted. Discrepancies were restricted to a limited subset of cells and did not alter the overall biological interpretation. Together, these results demonstrate that both the standard and batch-aware workflows reliably recover consistent and biologically coherent cell type annotations in a benchmark immune cell dataset, supporting the correctness and flexibility of the proposed analysis framework.</p>
+<figure id="fig-annotation">
+  <img src="https://raw.githubusercontent.com/MikeZhangZiyi/blog/refs/heads/main/content/posts/Single%20Cell/annotation.png">
+  <figcaption style="color:black;">
+    <strong>Figure 4. Workflow-level comparison of cell type annotation strategies on immune cell data. a</strong>   Cell type annotation obtained using a standard analysis workflow based on PCA-derived neighborhood graphs followed by automated CellTypist prediction. <strong>b </strong> Final cell type assignments produced by a semi-supervised scANVI model trained on the scVI latent representation. <strong>c </strong> Maximum posterior probability of scANVI predictions, highlighting annotation confidence and cells with ambiguous assignments. <strong>d </strong> Annotation agreement across workflows, indicating concordant and discordant cell type labels between the PCA-based CellTypist workflow and the scVI--scANVI workflow; low-confidence scANVI predictions were excluded from this comparison.
+  </figcaption>
+</figure>
+<h2 id="cell-type-identification-in-human-brain-dataset">Cell Type Identification in Human Brain Dataset</h2>
+<p>To establish a robust cellular framework for downstream analysis of infection-associated transcriptional changes, we performed unsupervised clustering and marker-based annotation on the integrated dataset comprising MV1, MV2, and NBH conditions. Using the scVI latent representation, we constructed a neighborhood graph and applied Leiden clustering (resolution = 0.8), followed by UMAP visualization. Major cell populations were identified based on established marker genes for human cerebral organoids and fetal brain development, including <em>SOX2</em>, <em>NES</em>, <em>PAX6</em>, and <em>VIM</em> for radial glia/neural progenitors; <em>EOMES</em> for intermediate progenitors; <em>TBR1</em>, <em>SATB2</em>, <em>BCL11B</em>, and <em>CUX2</em> for excitatory neurons; <em>GAD1</em> and <em>GAD2</em> for inhibitory neurons; <em>GFAP</em>, <em>AQP4</em>, and <em>SLC1A3</em> for astrocyte-like cells; <em>PDGFRA</em>, <em>VCAN</em>, and <em>OLIG2</em> for oligodendrocyte precursor cells (OPCs); and <em>MKI67</em> and <em>TOP2A</em> for proliferating cells.</p>
+<p>This annotation yielded seven major cell types with clear spatial separation in UMAP embeddings, as shown in Figure<sup><a href="#fig-brain-annotation">5</a></sup>. Quantitative comparison of cell type proportions revealed infection-specific shifts relative to the NBH control. Both MV1 and MV2 conditions exhibited a marked increase in excitatory neurons (41.1% in MV1 and 39.4% in MV2 versus 34.5% in NBH) and a corresponding decrease in intermediate progenitor cells (7.0% in MV1 and 5.2% in MV2 versus 13.8% in NBH) and proliferating cells (4.4% in MV1 and 3.4% in MV2 versus 5.9% in NBH). MV2 additionally showed an elevated proportion of inhibitory neurons (13.1% versus 9.9% in NBH). In contrast, astrocyte-like cells and OPCs displayed only modest changes across conditions.</p>
+<p>These compositional shifts, evident in both proportional quantification and spatial distribution on UMAP embeddings, as shown in Figure<sup><a href="#fig-brain-annotation">5</a></sup>, suggest that prion infection promotes neuronal differentiation or selective survival of neuronal lineages at the expense of progenitor and proliferative populations. The observed patterns provide a cellular context for interpreting infection-induced transcriptional responses in subsequent analyses.</p>
+<figure id="fig-brain-annotation">
+  <img src="https://raw.githubusercontent.com/MikeZhangZiyi/blog/refs/heads/main/content/posts/Single%20Cell/brain_annotation.png">
+  <figcaption style="color:black;">
+    <strong>Figure 5.Cell type annotation and compositional shifts in MV1, MV2, and NBH conditions. </strong> Left to right: UMAP embeddings colored by cell type for MV1, MV2, and NBH groups. Major populations include radial glia/neural progenitors, intermediate progenitors (IPC), excitatory and inhibitory neurons, astrocyte-like cells, OPCs, and proliferating cells. Quantitative proportions are summarized in Supplementary Table.
+  </figcaption>
+</figure>
+<h2 id="infection-associated-transcriptional-changes">Infection-Associated Transcriptional Changes</h2>
+<p>Comparative transcriptomic analyses were performed between MV1, MV2, and NBH conditions across major neural and glial cell populations to characterize infection-associated gene expression changes. Overall, MV1 and MV2 induced distinct and cell type–specific transcriptional programs relative to NBH, suggesting divergent biological responses to infection.</p>
+<p>Under the MV1 condition, neuronal populations exhibited pronounced transcriptional activation associated with cytoskeletal remodeling and cellular activation. Both excitatory and inhibitory neurons showed significant upregulation of genes involved in microtubule dynamics and structural plasticity, including <em>MARCKSL1</em>, <em>STMN1</em>, <em>TUBB3</em>, and <em>ACTG1</em>. In contrast, several progenitor and glial populations displayed reduced expression of metabolic and transcription-associated genes. Intermediate progenitor cells and oligodendrocyte precursor cells showed downregulation of neuronal differentiation markers such as <em>DCX</em>, together with decreased expression of mitochondrial and ribosomal genes, indicating a shift away from homeostatic or proliferative states. Astrocyte-like cells similarly exhibited reduced expression of immediate early genes and translational machinery, suggesting attenuated transcriptional activity under MV1 infection.</p>
+<p>In contrast, MV2 infection was characterized by a highly consistent and robust upregulation of <em>TTR</em> across nearly all examined cell types, including excitatory neurons, inhibitory neurons, astrocyte-like cells, radial glia, intermediate progenitors, and proliferating cells. This widespread induction of <em>TTR</em> was accompanied by more moderate changes in other genes, with relatively limited activation of cytoskeletal remodeling pathways compared to MV1. In neuronal populations, MV2 was associated with increased expression of stress-response and secretion-related genes such as <em>CRYAB</em>, <em>IGFBP7</em>, and <em>CXCL14</em>, while progenitor and proliferating cells showed enhanced expression of genes related to protein synthesis, metabolic activity, and cytoskeletal stability, including <em>EEF1A1</em>, <em>FTH1</em>, <em>VIM</em>, and multiple ribosomal components.</p>
+<p>Notably, oligodendrocyte precursor cells represented an exception to the global MV2 response, exhibiting downregulation of <em>TTR</em> and a broader suppression of transcriptional activity, highlighting cell type&ndash;specific sensitivity to infection-associated signals.</p>
+<p>Collectively, these results indicate that MV1 infection predominantly induces transcriptional programs associated with neuronal activation, structural remodeling, and altered progenitor differentiation, whereas MV2 infection elicits a distinct response dominated by a <em>TTR</em>-centered, broadly shared transcriptional signature suggestive of enhanced secretory or extracellular signaling processes. These findings, as illustrated in Figure<sup><a href="#fig-infection">6</a></sup>, underscore the presence of infection-specific and cell type&ndash;dependent molecular responses within the neural cellular landscape.</p>
+<figure id="fig-infection">
+  <img src="https://raw.githubusercontent.com/MikeZhangZiyi/blog/refs/heads/main/content/posts/Single%20Cell/infection_signature_dotplot.png">
+  <figcaption style="color:black;">
+    <strong>Figure 6. Infection-associated transcriptional signatures across major cell populations. </strong> Dot size indicates the fraction of expressing cells within each group, while color intensity represents mean normalized expression level. MV1 induces upregulation of cytoskeletal remodeling and neuronal activation genes (e.g. <i>MARCKSL1</i>, <i>STMN1</i>, <i>TUBB3</i>, <i>ACTG1</i>) primarily in excitatory and inhibitory neurons. In contrast, MV2 elicits a widespread upregulation of <i>TTR</i> across nearly all cell types, accompanied by moderate changes in stress-response and secretion-related genes.
+  </figcaption>
+</figure>
+<h1 id="discussion">Discussion</h1>
+<p>The present study systematically evaluated a standardized single-cell RNA-seq analysis workflow through benchmark validation on immune cell data and its application to a human cerebral organoid model of prion infection. The results demonstrate that the adaptive pipeline—combining scVI/scANVI-based batch-aware integration and semi-supervised annotation when batch effects are present, or PCA-based analysis with CellTypist/marker validation when they are absent—reliably recovers biologically coherent cell populations and detects infection-associated transcriptional changes.</p>
+<p>Validation on the immune cell dataset confirmed the robustness of both branches of the workflow. The moderate similarity between PCA- and scVI-based clustering (ARI ≈ 0.60), together with high concordance in major cell type annotations across the two pipelines, indicates that the framework is flexible and effective across different representation learning strategies (Figure<sup><a href="#fig-leiden">3</a></sup> and Figure<sup><a href="#fig-annotation">4</a></sup>). This adaptability is particularly valuable for real-world datasets, where technical variability may vary in severity.</p>
+<p>Application to the human cerebral organoid prion infection dataset (GSE309815) revealed clear cell type–specific responses to MV1 and MV2 infection at approximately 120 days post-infection. Unsupervised clustering and marker-based annotation identified seven major populations with distinct spatial separation in UMAP embeddings (Figure~\ref{fig:celltype}). Quantitative compositional analysis showed that both MV1 and MV2 conditions were characterized by a marked expansion of excitatory neurons (41.1% and 39.4%, respectively, versus 34.5% in NBH) and a corresponding reduction in intermediate progenitor cells (7.0% and 5.2% versus 13.8%) and proliferating cells (4.4% and 3.4% versus 5.9%). MV2 additionally exhibited an increased proportion of inhibitory neurons (13.1% versus 9.9% in NBH). These shifts suggest that prion infection may promote neuronal differentiation or confer selective survival advantages to post-mitotic neuronal lineages at the expense of progenitor maintenance and proliferation.</p>
+<p>Differential expression analysis further highlighted divergent transcriptional programs between MV1 and MV2 (Figure<sup><a href="#fig-infection">6</a></sup>). MV1 infection predominantly activated genes associated with cytoskeletal remodeling and structural plasticity in neuronal populations, including <em>MARCKSL1</em>, <em>STMN1</em>, <em>TUBB3</em>, and <em>ACTG1</em>. These changes are consistent with prion-induced neuronal injury, synaptic dysfunction, and compensatory remodeling of the actin-microtubule cytoskeleton. In contrast, MV2 elicited a remarkably consistent and widespread upregulation of <em>TTR</em> (transthyretin) across nearly all cell types, accompanied by more moderate induction of stress-response and secretion-related genes such as <em>CRYAB</em>, <em>IGFBP7</em>, and <em>CXCL14</em>. Notably, oligodendrocyte precursor cells (OPCs) were an exception, showing downregulation of <em>TTR</em> and broader transcriptional suppression, suggesting cell type–specific resistance or vulnerability to MV2 signals.</p>
+<p>The pronounced and near-ubiquitous induction of <em>TTR</em> under MV2 is particularly intriguing. Transthyretin is best known as a transporter of thyroxine and retinol in plasma and cerebrospinal fluid, but it also exhibits chaperone-like activity and neuroprotective effects in the central nervous system. Its dramatic upregulation across diverse cell types may represent a conserved protective response to MV2 infection, potentially mitigating protein misfolding or extracellular stress. The limited activation of classical unfolded protein response (UPR) genes (<em>ATF4</em>, <em>DDIT3</em>, <em>HSPA5</em>) in our dataset suggests that the infection time point (120 dpi) may precede peak UPR activation or that MV1 and MV2 trigger partially distinct stress pathways.</p>
+<p>Several limitations should be noted. First, the analysis was restricted to the 120 dpi time point; later stages (e.g., 180 dpi) may reveal more pronounced UPR activation or progressive neuronal loss. Second, although the workflow effectively mitigated batch effects, residual technical variation or low infection efficiency could have masked subtle infection signatures. Third, cell type annotation relied on marker genes and automated prediction without a direct reference atlas matched to human cerebral organoids, which may introduce minor misclassification in transitional or immature states.</p>
+<p>Despite these limitations, the present results provide a solid foundation for understanding prion infection in human neural tissue models. The distinct transcriptional responses of MV1 (neuronal remodeling) and MV2 (TTR-dominated response) highlight the value of molecular strain-specific studies in prion disease. Future work should extend the analysis to later time points, incorporate multi-omic data (e.g., ATAC-seq or spatial transcriptomics), and validate candidate genes such as <em>TTR</em> and <em>MARCKSL1</em> using functional assays in organoid models. These efforts will further elucidate the cellular mechanisms underlying prion strain diversity and inform potential therapeutic strategies targeting cell type–specific pathways.</p>
+<p>In summary, this winter research training not only consolidated practical skills in single-cell RNA-seq analysis but also generated biologically meaningful insights into infection-associated changes in human cerebral organoids, demonstrating the power of standardized workflows in exploring complex disease models.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>HEUMOS L, SCHAAR A C, LANCE C, et al. Best practices for single-cell analysis across modalities[J/OL]. Nature Reviews Genetics, 2023, 24(8): 550-572. <a href="https://oi.org/10.1038/s41576-023-00586-w">https://oi.org/10.1038/s41576-023-00586-w</a>. DOI: <a href="10.1038/s41576-023-00586-w">10.1038/s41576-023-00586-w</a>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>LUECKENMD, BURKHARDT D B, CANNOODT R, et al. A sandbox for prediction and integration of DNA, RNA, and proteins in single cells[COL]//Thirty-fifth Conference on Neural Information Processing Systems Datasets and Benchmarks Track (Round 2). 2021. <a href="https://openreview.net/forum?id=gN35BGa1Rt">https://openreview.net/forum?id=gN35BGa1Rt</a>.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>Single-cell RNA-seq of human cerebral organoids under infection conditions[EB/OL]. 2024. <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE309815">https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE309815</a>.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+            
+             
+            
+
+
+
+
+            
+            </div>
+            
+            
+
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+	
+    
+    
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FEATURED TAGS</h5>
+        <div class="tags">
+            
+            
+               
+            
+        </div>
+    </section>
+    
+
+    
+    
+    
+    
+</div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Mike&#39;s Blog 2026
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    (function() {
+        function updateTagcloudColors() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const startColor = isDark ? '#808080' : '#bbbbee';
+            if($('#tag_cloud').length !== 0 && $.fn.tagcloud) {
+                $.fn.tagcloud.defaults = {
+                    color: {start: startColor, end: '#0085a1'},
+                };
+                $('#tag_cloud a').tagcloud();
+            }
+        }
+
+        
+        $(document).ready(function() {
+            updateTagcloudColors();
+        });
+
+        
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === 'data-theme') {
+                    updateTagcloudColors();
+                }
+            });
+        });
+
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-theme']
+        });
+    })();
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<script src="/blog/js/theme-toggle.js"></script>
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow" title="' + t + '">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/blog\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -14,11 +14,11 @@
       <pubDate>Mon, 09 Mar 2026 16:09:29 +0800</pubDate>
       <guid>http://localhost:1313/blog/posts/single-cell/learning-and-practice-of-single-cell-sequencing/</guid>
       <description>&lt;div style=&#34;
-  text-align: justify;    
-  line-height: 1.6;       
-  hyphens: auto;          
+  text-align: justify;
+  line-height: 1.6;
+  hyphens: auto;
   word-break: break-all;  
-  max-width: 100%;        
+  max-width: 100%;
 &#34;&gt;
 &lt;h1 id=&#34;materials-and-methods&#34;&gt;Materials and Methods&lt;/h1&gt;
 &lt;h2 id=&#34;learning-resources-and-workflow-design&#34;&gt;Learning Resources and Workflow Design&lt;/h2&gt;
@@ -30,6 +30,13 @@
   &lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;p&gt;At the beginning of the analysis, potential batch effects were systematically assessed using exploratory data visualization and metadata inspection. This initial evaluation determined whether samples originated from multiple batches or experimental conditions that could introduce technical variation. Based on this assessment, one of two alternative analysis workflows was selected.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Hello World</title>
+      <link>http://localhost:1313/blog/posts/hello-world/hello-world/</link>
+      <pubDate>Sat, 07 Mar 2026 16:09:29 +0800</pubDate>
+      <guid>http://localhost:1313/blog/posts/hello-world/hello-world/</guid>
+      <description></description>
     </item>
   </channel>
 </rss>
