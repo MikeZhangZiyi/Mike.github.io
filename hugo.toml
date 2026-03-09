@@ -1,4 +1,4 @@
-baseURL = "https://Mike.github.io/"   
+baseURL = "https://mikezhangziyi.github.io/blog/"   
 languageCode = "zh-cn"   # 或 "en-us"
 title = "Mike's Blog"
 theme = "PaperMod"
