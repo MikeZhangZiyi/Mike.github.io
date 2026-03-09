@@ -22,3 +22,8 @@ buildDrafts = false
   ShowToc = false         # 隐藏目录
   [params.assets]
     css = ["css/custom.css"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
