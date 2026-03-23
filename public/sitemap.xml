@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://localhost:1313/blog/tags/machine-learning/</loc>
+    <lastmod>2026-03-22T03:32:29+08:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/blog/</loc>
     <lastmod>2026-03-22T03:32:29+08:00</lastmod>
   </url><url>
@@ -11,7 +14,13 @@
     <loc>http://localhost:1313/blog/posts/</loc>
     <lastmod>2026-03-22T03:32:29+08:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/blog/tags/</loc>
+    <lastmod>2026-03-22T03:32:29+08:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/blog/posts/single-cell/learning-and-practice-of-single-cell-sequencing/</loc>
+    <lastmod>2026-03-09T16:09:29+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/tags/single-cells/</loc>
     <lastmod>2026-03-09T16:09:29+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/posts/hello-world/hello-world/</loc>
@@ -19,6 +28,6 @@
   </url><url>
     <loc>http://localhost:1313/blog/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/blog/tags/</loc>
+    <loc>http://localhost:1313/blog/search/</loc>
   </url>
 </urlset>

@@ -3,6 +3,7 @@ date = '2026-03-22T3:32:29+08:00'
 draft = false
 title = 'ML-1 Note: Supervised Learning; Linear Regression'
 math = true
+tags = ["Machine Learning"]
 +++
 
 # ML-1 Note: Supervised Learning; Linear Regression 

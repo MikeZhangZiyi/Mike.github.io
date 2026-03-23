@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>ML-1 Note: Supervised Learning; Linear Regression | Mike&#39;s Blog</title>
-<meta name="keywords" content="">
+<meta name="keywords" content="Machine Learning">
 <meta name="description" content="ML-1 Note: Supervised Learning; Linear Regression
 1. Basic Model of Linear Regression
 Linear Regression is one of the simplest and most fundamental models in supervised learning.
@@ -105,6 +105,45 @@ The most common loss function for linear regression is Mean Squared Error (MSE).
           ],
           throwOnError : false
         });">
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Zilla+Slab:ital@1&display=swap" rel="stylesheet">
+<style>
+     
+    #top, .main, .post-single, .list-header {
+        animation: smooth-entry 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+        opacity: 0;
+        will-change: transform, opacity;
+    }
+
+     
+    @keyframes smooth-entry {
+        0% {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+     
+    .menu a:active {
+        transform: scale(0.96);
+        transition: 0.1s;
+    }
+</style>
+
+<script>
+    
+    window.addEventListener('beforeunload', function() {
+        const main = document.querySelector('.main') || document.querySelector('#top');
+        if (main) {
+            main.style.transition = 'opacity 0.2s ease';
+            main.style.opacity = '0';
+        }
+    });
 </script><meta property="og:url" content="http://localhost:1313/blog/posts/ml/ml---1/">
   <meta property="og:site_name" content="Mike&#39;s Blog">
   <meta property="og:title" content="ML-1 Note: Supervised Learning; Linear Regression">
@@ -121,6 +160,7 @@ where:
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2026-03-22T03:32:29+08:00">
     <meta property="article:modified_time" content="2026-03-22T03:32:29+08:00">
+    <meta property="article:tag" content="Machine Learning">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ML-1 Note: Supervised Learning; Linear Regression">
@@ -162,7 +202,7 @@ where:
   "name": "ML-1 Note: Supervised Learning; Linear Regression",
   "description": "ML-1 Note: Supervised Learning; Linear Regression 1. Basic Model of Linear Regression Linear Regression is one of the simplest and most fundamental models in supervised learning.\nThe goal is to model the relationship between input features and a continuous target variable.\nModel Form For a dataset with feature vector \\(x\\):\n\\[ y = w^T x + b \\]\nor equivalently\n\\[ \\hat{y} = \\theta^T x \\]\nwhere:\n\\(x\\): input feature vector \\(w\\): weight vector \\(b\\): bias term \\(\\theta\\): parameter vector (including bias) \\(\\hat{y}\\): predicted value Loss Function The most common loss function for linear regression is Mean Squared Error (MSE).\n",
   "keywords": [
-    
+    "Machine Learning"
   ],
   "articleBody": "ML-1 Note: Supervised Learning; Linear Regression 1. Basic Model of Linear Regression Linear Regression is one of the simplest and most fundamental models in supervised learning.\nThe goal is to model the relationship between input features and a continuous target variable.\nModel Form For a dataset with feature vector \\(x\\):\n\\[ y = w^T x + b \\]\nor equivalently\n\\[ \\hat{y} = \\theta^T x \\]\nwhere:\n\\(x\\): input feature vector \\(w\\): weight vector \\(b\\): bias term \\(\\theta\\): parameter vector (including bias) \\(\\hat{y}\\): predicted value Loss Function The most common loss function for linear regression is Mean Squared Error (MSE).\n\\[ L_{MSE} = \\frac{1}{n}\\sum_{i=1}^{n}(y_i - \\hat{y}_i)^2 \\]\nwhere:\n\\(n\\): number of samples \\(y_i\\): true value \\(\\hat{y}_i\\): predicted value The training objective is:\n\\[ \\min_\\theta L_{MSE} \\]\n2. Solvers for Linear Regression There are two classical ways to solve linear regression:\nGradient Descent (GD) Normal Equation 2.1 Gradient Descent (GD) Gradient Descent is an iterative optimization algorithm.\nUpdate Rule \\[ \\theta := \\theta - \\alpha \\nabla_\\theta L \\]\nwhere:\n\\(\\alpha\\) is the learning rate \\(\\nabla_\\theta L\\) is the gradient of the loss function For MSE:\n\\[ \\nabla_\\theta L = \\frac{2}{n}X^T(X\\theta - y) \\]\nComputational Issue When the dataset is very large:\ncomputing gradients over the entire dataset can be slow. A common trick is to use a smaller subset of data to estimate the gradient, such as:\nStochastic Gradient Descent (SGD) Mini-batch Gradient Descent This reduces computation time and speeds up training.\n2.2 Normal Equation Linear regression also has a closed-form solution.\n\\[ \\theta = (X^T X)^{-1} X^T y \\]\nAdvantages:\nNo iterative optimization required Exact solution Disadvantages:\nMatrix inversion costs \\(O(d^3)\\) Not suitable when the number of features is very large Probability View of Linear Regression Assume the data is generated as:\n\\[ y = w^T x + \\epsilon \\]\nwhere noise:\n\\[ \\epsilon \\sim N(0, \\sigma^2) \\]\nThen the conditional distribution is:\n\\[ p(y|x) = N(w^T x, \\sigma^2) \\]\nThe likelihood for the dataset is:\n\\[ L = \\prod_i p(y_i | x_i) \\]\nTaking the log-likelihood:\n\\[ \\log L = -\\frac{1}{2\\sigma^2}\\sum (y_i - w^T x_i)^2 + C \\]\nMaximizing the log-likelihood is therefore equivalent to minimizing:\n\\[ \\sum (y_i - w^T x_i)^2 \\]\nThus:\n\\[ L_{LL} \\equiv L_{MSE} \\]\nSo MSE minimization is equivalent to Maximum Likelihood Estimation (MLE) under Gaussian noise.\n3. Underfitting and Overfitting Underfitting Underfitting occurs when the model is too simple to capture the true relationship.\nCharacteristics:\nHigh training error High testing error Example:\nfitting a linear model to highly nonlinear data Overfitting Overfitting occurs when the model fits noise in the training data.\nCharacteristics:\nVery low training error High testing error Typical cause:\ntoo many parameters small dataset 4. Regularization to Prevent Overfitting Regularization adds a penalty term to the loss function.\nTwo common methods:\nRidge Regression (L2) Lasso Regression (L1) 4.1 Ridge Regression (L2 Regularization) Ridge regression modifies the loss function:\n\\[ L = \\sum (y_i - w^T x_i)^2 + \\lambda ||w||^2 \\]\nwhere:\n\\(\\lambda\\) controls the regularization strength. Normal Equation for Ridge Regression The closed-form solution becomes:\n\\[ \\theta = (X^T X + \\lambda I)^{-1} X^T y \\]\nAdvantages:\nprevents matrix singularity stabilizes estimation Gradient Descent for Ridge Regression The gradient becomes:\n\\[ \\nabla_\\theta L = \\frac{2}{n}X^T(X\\theta - y) + 2\\lambda\\theta \\]\nUpdate rule:\n\\[ \\theta := \\theta - \\alpha \\nabla_\\theta L \\]\nProbability View of Ridge Regression Ridge regression can be interpreted using Bayesian statistics.\nAssume:\nLikelihood:\n\\[ y|x,w \\sim N(w^T x, \\sigma^2) \\]\nPrior on parameters:\n\\[ w \\sim N(0, \\tau^2 I) \\]\nThen the posterior maximization:\n\\[ \\max_w p(w|D) \\]\nis equivalent to minimizing:\n\\[ \\sum (y_i - w^T x_i)^2 + \\lambda ||w||^2 \\]\nThus:\nRidge regression = MAP estimation with Gaussian prior on weights.\n4.2 Lasso Regression (L1 Regularization) Lasso regression modifies the loss function as:\n\\[ L = \\sum (y_i - w^T x_i)^2 + \\lambda ||w||_1 \\]\nwhere\n\\[ ||w||_1 = \\sum |w_i| \\]\nProperties:\nencourages sparse solutions performs feature selection Common Solution Methods Unlike ridge regression, Lasso does not have a closed-form solution.\nTypical optimization methods include:\nCoordinate Descent Subgradient Methods Least Angle Regression (LARS) Proximal Gradient Methods 5. Model Selection and Generalization Gap 5.1 True Error (Expected Risk) Assume the data are drawn i.i.d. from an unknown distribution (D):\n\\[\r(x,y) \\sim D\r\\]\rFor a model (f) and loss function (L(y,f(x))), the true error (expected risk) is defined as\n\\[ \\mathcal{L}_D(f) = \\mathbb{E}_{(x,y) \\sim D}[L(y,f(x))] \\]\rThis measures the average prediction error over the true data distribution.\n5.2 Validation / Empirical Error Instead, we estimate the performance using a finite validation dataset\n\\[\rD_{val} = \\{(x^{(i)},y^{(i)})\\}_{i=1}^{|D_{val}|}\r\\]\rThe validation error is\n\\[ \\mathcal{L}_{val}(f) = \\frac{1}{|D_{val}|} \\sum_{(x^{(i)},y^{(i)}) \\in D_{val}} L(y^{(i)},f(x^{(i)})) \\]\r5.3 Generalization Gap The generalization gap measures the discrepancy between the true error and the empirical estimate:\n\\[\r\\left| \\mathcal{L}_D(f) - \\mathcal{L}_{val}(f) \\right|\r\\]\rIf the validation set is sampled i.i.d. from the same distribution (D),\n\\[\r\\mathcal{L}_D(f) = \\mathbb{E}_{D_{val} \\sim D}[\\mathcal{L}_{val}(f)]\r\\]\r5.4 Generalization Bound Assume the loss is bounded: \\( L(\\cdot,\\cdot) \\in [a,b] \\) and the validation set \\( D_{val} \\) is drawn i.i.d. from (D).\nWith probability at least \\( 1-\\delta \\),\n\\[\r|\\mathcal{L}_D(f) - \\mathcal{L}_{val}(f)|\r\\le\r\\sqrt{\\frac{(b-a)^2 \\ln(2/\\delta)}{2|D_{val}|}}\r\\]\r5.5 Effect of Testing Multiple Models In model selection, we often test multiple models or hyperparameters. Suppose we evaluate (K) candidate models: \\( f_1,f_2,\\dots,f_K \\).\nThe maximum deviation across all (K) trials can be bounded as:\n\\[\r\\Pr\\left[\r\\mathcal{L}_D(f_k)\r\\ge\r\\mathcal{L}_{val}(f_k)\r+\r\\sqrt{\\frac{(b-a)^2 \\ln(2K/\\delta)}{2|D_{val}|}}\r\\right]\r\\le \\delta\r\\]\r5.6 Interpretation From the bounds above we obtain two important conclusions:\nThe estimation error decreases with dataset size: \\( O\\left(\\frac{1}{\\sqrt{|D_{val}|}}\\right) \\). Testing (K) hyperparameters only increases the risk by \\( O(\\sqrt{\\ln K}) \\). 5.7 Cross-Validation k-fold cross-validation improves data efficiency.\nProcedure:\nSplit dataset into (k) folds. Train (k) models. Average the validation errors: \\[\rL_{CV} = \\frac{1}{k} \\sum_{i=1}^k L_i\r\\]\r",
   "wordCount" : "967",
@@ -217,6 +257,21 @@ where:
             </div>
         </div>
         <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/blog/posts/" title="📝 Posts">
+                    <span>📝 Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/blog/tags/" title="🏷️ Tags">
+                    <span>🏷️ Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/blog/search/" title="🔍 Search (Alt &#43; /)" accesskey=/>
+                    <span>🔍 Search</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </header>
@@ -228,7 +283,7 @@ where:
     <h1 class="post-title entry-hint-parent">
       ML-1 Note: Supervised Learning; Linear Regression
     </h1>
-    <div class="post-meta"><span title='2026-03-22 03:32:29 +0800 CST'>2026-03-22</span>&nbsp;·&nbsp;<span>Mike</span>
+    <div class="post-meta"><span title='2026-03-22 03:32:29 +0800 CST'>March 22, 2026</span>&nbsp;·&nbsp;<span>Mike</span>
 
 </div>
   </header> <div class="toc">
@@ -644,6 +699,7 @@ L_{CV} = \frac{1}{k} \sum_{i=1}^k L_i
 
   <footer class="post-footer">
     <ul class="post-tags">
+      <li><a href="http://localhost:1313/blog/tags/machine-learning/">Machine Learning</a></li>
     </ul>
 <nav class="paginav">
   <a class="next" href="http://localhost:1313/blog/posts/single-cell/learning-and-practice-of-single-cell-sequencing/">
@@ -684,7 +740,28 @@ L_{CV} = \frac{1}{k} \sum_{i=1}^k L_i
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
         <path d="M12 6H0l6-6z" />
     </svg>
-</a>
+</a><script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const text = "Recording life, technology and essays"; 
+        const speed = 100; 
+        const target = document.querySelector(".header-description") || document.querySelector(".description");
+        
+        if (target) {
+            target.innerHTML = '<span class="typing-text"></span><span class="typing-cursor"></span>';
+            const textContainer = target.querySelector(".typing-text");
+            let i = 0;
+
+            function typeWriter() {
+                if (i < text.length) {
+                    textContainer.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+            }
+            typeWriter();
+        }
+    });
+</script>
 
 <script>
     let menu = document.getElementById('menu');

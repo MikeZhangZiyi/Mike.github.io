@@ -9,11 +9,11 @@
     <lastBuildDate>Sun, 22 Mar 2026 03:32:29 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/blog/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>ML-1 Supervised Learning: Linear Regression Notes</title>
+      <title>ML-1 Note: Supervised Learning; Linear Regression</title>
       <link>http://localhost:1313/blog/posts/ml/ml---1/</link>
       <pubDate>Sun, 22 Mar 2026 03:32:29 +0800</pubDate>
       <guid>http://localhost:1313/blog/posts/ml/ml---1/</guid>
-      <description>&lt;h1 id=&#34;ml-1-supervised-learning-linear-regression-notes&#34;&gt;ML-1 Supervised Learning: Linear Regression Notes&lt;/h1&gt;
+      <description>&lt;h1 id=&#34;ml-1-note-supervised-learning-linear-regression&#34;&gt;ML-1 Note: Supervised Learning; Linear Regression&lt;/h1&gt;
 &lt;h2 id=&#34;1-basic-model-of-linear-regression&#34;&gt;1. Basic Model of Linear Regression&lt;/h2&gt;
 &lt;p&gt;Linear Regression is one of the simplest and most fundamental models in &lt;strong&gt;supervised learning&lt;/strong&gt;.&lt;br&gt;
 The goal is to model the relationship between input features and a continuous target variable.&lt;/p&gt;

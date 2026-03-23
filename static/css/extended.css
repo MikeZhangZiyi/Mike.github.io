@@ -1,0 +1,49 @@
+/* 针对首页描述文字的样式 */
+.description {
+    font-family: 'Montserrat', sans-serif; /* 使用刚才引入的字体 */
+    font-size: 1.2rem;
+    color: var(--secondary);
+    min-height: 1.5em; /* 防止文字跳动 */
+    display: inline-block;
+}
+
+/* 模拟打字机的光标 */
+.typing-cursor {
+    margin-left: 2px;
+    border-right: 2px solid var(--secondary);
+    animation: blink 0.3s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* 1. 开启视图过渡动画 (现代浏览器支持) */
+@view-transition {
+  navigation: auto; /* 允许在页面导航时自动触发动画 */
+}
+
+/* 2. 定义旧页面淡出、新页面浮现的动画 */
+::view-transition-old(root) {
+  animation: 0.3s cubic-bezier(0.4, 0, 0.2, 1) both fade-out,
+             0.3s cubic-bezier(0.4, 0, 0.2, 1) both scale-down;
+}
+
+::view-transition-new(root) {
+  animation: 0.4s cubic-bezier(0.4, 0, 0.2, 1) both fade-in,
+             0.4s cubic-bezier(0.4, 0, 0.2, 1) both scale-up;
+}
+
+/* 3. 具体动画帧定义 */
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes fade-out { to { opacity: 0; } }
+
+@keyframes scale-up {
+  from { transform: scale(0.98) translateY(10px); }
+  to { transform: scale(1) translateY(0); }
+}
+
+@keyframes scale-down {
+  to { transform: scale(1.02) translateY(-10px); }
+}

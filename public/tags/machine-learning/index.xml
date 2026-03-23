@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Machine Learning on Mike&#39;s Blog</title>
+    <link>http://localhost:1313/blog/tags/machine-learning/</link>
+    <description>Recent content in Machine Learning on Mike&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 22 Mar 2026 03:32:29 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/blog/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ML-1 Note: Supervised Learning; Linear Regression</title>
+      <link>http://localhost:1313/blog/posts/ml/ml---1/</link>
+      <pubDate>Sun, 22 Mar 2026 03:32:29 +0800</pubDate>
+      <guid>http://localhost:1313/blog/posts/ml/ml---1/</guid>
+      <description>&lt;h1 id=&#34;ml-1-note-supervised-learning-linear-regression&#34;&gt;ML-1 Note: Supervised Learning; Linear Regression&lt;/h1&gt;
+&lt;h2 id=&#34;1-basic-model-of-linear-regression&#34;&gt;1. Basic Model of Linear Regression&lt;/h2&gt;
+&lt;p&gt;Linear Regression is one of the simplest and most fundamental models in &lt;strong&gt;supervised learning&lt;/strong&gt;.&lt;br&gt;
+The goal is to model the relationship between input features and a continuous target variable.&lt;/p&gt;
+&lt;h3 id=&#34;model-form&#34;&gt;Model Form&lt;/h3&gt;
+&lt;p&gt;For a dataset with feature vector \(x\):&lt;/p&gt;
+&lt;p&gt;\[
+y = w^T x + b
+\]&lt;/p&gt;
+&lt;p&gt;or equivalently&lt;/p&gt;
+&lt;p&gt;\[
+\hat{y} = \theta^T x
+\]&lt;/p&gt;
+&lt;p&gt;where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;\(x\): input feature vector&lt;/li&gt;
+&lt;li&gt;\(w\): weight vector&lt;/li&gt;
+&lt;li&gt;\(b\): bias term&lt;/li&gt;
+&lt;li&gt;\(\theta\): parameter vector (including bias)&lt;/li&gt;
+&lt;li&gt;\(\hat{y}\): predicted value&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;loss-function&#34;&gt;Loss Function&lt;/h3&gt;
+&lt;p&gt;The most common loss function for linear regression is &lt;strong&gt;Mean Squared Error (MSE)&lt;/strong&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

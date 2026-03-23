@@ -83,6 +83,45 @@
           ],
           throwOnError : false
         });">
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Zilla+Slab:ital@1&display=swap" rel="stylesheet">
+<style>
+     
+    #top, .main, .post-single, .list-header {
+        animation: smooth-entry 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+        opacity: 0;
+        will-change: transform, opacity;
+    }
+
+     
+    @keyframes smooth-entry {
+        0% {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+     
+    .menu a:active {
+        transform: scale(0.96);
+        transition: 0.1s;
+    }
+</style>
+
+<script>
+    
+    window.addEventListener('beforeunload', function() {
+        const main = document.querySelector('.main') || document.querySelector('#top');
+        if (main) {
+            main.style.transition = 'opacity 0.2s ease';
+            main.style.opacity = '0';
+        }
+    });
 </script><meta property="og:url" content="http://localhost:1313/blog/tags/">
   <meta property="og:site_name" content="Mike&#39;s Blog">
   <meta property="og:title" content="Tags">
@@ -124,6 +163,21 @@
             </div>
         </div>
         <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/blog/posts/" title="📝 Posts">
+                    <span>📝 Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/blog/tags/" title="🏷️ Tags">
+                    <span class="active">🏷️ Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/blog/search/" title="🔍 Search (Alt &#43; /)" accesskey=/>
+                    <span>🔍 Search</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </header>
@@ -133,6 +187,12 @@
 </header>
 
 <ul class="terms-tags">
+    <li>
+        <a href="http://localhost:1313/blog/tags/machine-learning/">Machine Learning <sup><strong><sup>1</sup></strong></sup> </a>
+    </li>
+    <li>
+        <a href="http://localhost:1313/blog/tags/single-cells/">Single Cells <sup><strong><sup>1</sup></strong></sup> </a>
+    </li>
 </ul>
     </main>
     
@@ -149,7 +209,28 @@
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
         <path d="M12 6H0l6-6z" />
     </svg>
-</a>
+</a><script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const text = "Recording life, technology and essays"; 
+        const speed = 100; 
+        const target = document.querySelector(".header-description") || document.querySelector(".description");
+        
+        if (target) {
+            target.innerHTML = '<span class="typing-text"></span><span class="typing-cursor"></span>';
+            const textContainer = target.querySelector(".typing-text");
+            let i = 0;
+
+            function typeWriter() {
+                if (i < text.length) {
+                    textContainer.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+            }
+            typeWriter();
+        }
+    });
+</script>
 
 <script>
     let menu = document.getElementById('menu');

@@ -1,30 +1,79 @@
-baseURL = "https://mikezhangziyi.github.io/blog/"   
-languageCode = "zh-cn"   # 或 "en-us"
+baseURL = "https://mikezhangziyi.github.io/blog/"
+languageCode = "zh-cn"
 title = "Mike's Blog"
 theme = "PaperMod"
 
 enableRobotsTXT = true
-buildDrafts = false
 paginate = 5
 
+[outputs]
+    home = ["HTML", "RSS", "JSON"]
+
 [params]
+  customCSS = ["css/extended.css"]
   env = "production"
-  title = "Mike's Blog"
   description = "Recording life, technology and essays"
   author = "Mike"
-  DateFormat = "2006-01-02"
-  defaultTheme = "auto"   # 自动深浅模式
-  hideSummary = false      # 关键！隐藏摘要/预览，只显示标题
-  ShowReadingTime = false 
-  ShowWordCount = false
-  ShowShareButtons = false
-  ShowPostNavLinks = true
-  ShowBreadCrumbs = true
-  ShowToc = true         # 隐藏目录
+  defaultTheme = "auto"
   comments = true
-  math = true
+
+  ShowToc = true
+  ShowBreadCrumbs = true
+  ShowPostNavLinks = true
+
+[label]
+  icon = "https://raw.githubusercontent.com/MikeZhangZiyi/blog/refs/heads/main/static/images/logo.jpg"
+  iconHeight = 35
+
+[params.profileMode]
+  enabled = true
+  title = "Mike Ogilvy "
+  subtitle = "<span class='description'></span>"
+  imageUrl = "https://raw.githubusercontent.com/MikeZhangZiyi/blog/refs/heads/main/static/images/logo.jpg"
+  imageWidth = 120
+  imageHeight = 120
+
+[[params.socialIcons]]
+name = "github"
+url = "https://github.com/MikeZhangZiyi"
+
+[[params.socialIcons]]
+name = "twitter"
+url = "https://github.com/MikeZhangZiyi"
+
+[[params.socialIcons]]
+name = "Telegram"
+url = "https://github.com/MikeZhangZiyi"
+
+[params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    minMatchCharLength = 2
+    # 关键：设置权重。Title 权重最高，Content 权重低一些
+    keys = ["title", "permalink", "summary", "content"]
+
+
+[[menu.main]]
+    identifier = "posts"
+    name = "📝 Posts"
+    url = "/posts/"
+    weight = 10
+
+[[menu.main]]
+    identifier = "tags"
+    name = "🏷️ Tags"
+    url = "/tags/"
+    weight = 20
+
+[[menu.main]]
+    identifier = "search"
+    name = "🔍 Search"
+    url = "/search/"
+    weight = 30
 
 [markup]
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
+  [markup.goldmark.renderer]
+    unsafe = true
