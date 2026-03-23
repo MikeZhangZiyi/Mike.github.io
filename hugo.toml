@@ -45,6 +45,10 @@ url = "https://x.com/MikeOgilvy94"
 name = "Telegram"
 url = "https://t.me/MikeOgilvy"
 
+[[params.socialIcons]]
+name = "Email"
+url = "mailto:mikeogilvy25@gmail.com"
+
 [params.assets]
     favicon = "https://raw.githubusercontent.com/MikeOgilvy/blog/refs/heads/main/static/images/logo.jpg"
 
