@@ -39,11 +39,11 @@ url = "https://github.com/MikeZhangZiyi"
 
 [[params.socialIcons]]
 name = "twitter"
-url = "https://github.com/MikeZhangZiyi"
+url = "https://x.com/MikeOgilvy94"
 
 [[params.socialIcons]]
 name = "Telegram"
-url = "https://github.com/MikeZhangZiyi"
+url = "https://t.me/MikeOgilvy"
 
 [params.fuseOpts]
     isCaseSensitive = false
