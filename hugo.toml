@@ -45,6 +45,9 @@ url = "https://x.com/MikeOgilvy94"
 name = "Telegram"
 url = "https://t.me/MikeOgilvy"
 
+[params.assets]
+    favicon = "https://raw.githubusercontent.com/MikeZhangZiyi/blog/refs/heads/main/static/images/logo.jpg"
+
 [params.fuseOpts]
     isCaseSensitive = false
     shouldSort = true
