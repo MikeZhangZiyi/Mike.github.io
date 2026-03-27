@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><script src="/blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=blog/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>ML-2 Note: Linear Models for Classification and GLMs | Mike&#39;s Blog</title>
+<meta name="keywords" content="Machine Learning">
+<meta name="description" content="ML-2 Note: Linear Models for Classification and GLMs
+1. Why Classification Uses Logistic Regression
+In classification problems, the target variable is discrete.
+Binary classification example:
+$$y \in { 0,1 }$$
+Given input features
+$$x \in \mathbb{R}^d$$
+we want to model
+$$P(y=1|x)$$
+Problem with Linear Regression
+A linear model predicts
+$$f(x) = w^T x$$
+but
+$$w^T x \in (-\infty, \infty)$$
+while probabilities must satisfy
+$$P(y=1|x) \in [0,1]$$
+Thus we need a function that maps">
+<meta name="author" content="Mike">
+<link rel="canonical" href="http://localhost:1313/blog/posts/ml/ml---2/">
+<link crossorigin="anonymous" href="/blog/assets/css/stylesheet.a29c24210eb31d9ce56f669c66a35c9c51b17376b7764e336a49af7dec914cf0.css" integrity="sha256-opwkIQ6zHZzlb2acZqNcnFGxc3a3dk4zakmvfeyRTPA=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://raw.githubusercontent.com/MikeOgilvy/blog/refs/heads/main/static/images/logo.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/blog/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/blog/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/blog/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/blog/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/blog/posts/ml/ml---2/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError : false
+        });">
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Zilla+Slab:ital@1&display=swap" rel="stylesheet">
+<style>
+     
+    #top, .main, .post-single, .list-header {
+        animation: smooth-entry 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+        opacity: 0;
+        will-change: transform, opacity;
+    }
+
+     
+    @keyframes smooth-entry {
+        0% {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+     
+    .menu a:active {
+        transform: scale(0.96);
+        transition: 0.1s;
+    }
+</style>
+
+<script>
+    
+    window.addEventListener('beforeunload', function() {
+        const main = document.querySelector('.main') || document.querySelector('#top');
+        if (main) {
+            main.style.transition = 'opacity 0.2s ease';
+            main.style.opacity = '0';
+        }
+    });
+</script><meta property="og:url" content="http://localhost:1313/blog/posts/ml/ml---2/">
+  <meta property="og:site_name" content="Mike&#39;s Blog">
+  <meta property="og:title" content="ML-2 Note: Linear Models for Classification and GLMs">
+  <meta property="og:description" content="ML-2 Note: Linear Models for Classification and GLMs 1. Why Classification Uses Logistic Regression In classification problems, the target variable is discrete.
+Binary classification example:
+$$y \in { 0,1 }$$
+Given input features
+$$x \in \mathbb{R}^d$$
+we want to model
+$$P(y=1|x)$$
+Problem with Linear Regression A linear model predicts
+$$f(x) = w^T x$$
+but
+$$w^T x \in (-\infty, \infty)$$
+while probabilities must satisfy
+$$P(y=1|x) \in [0,1]$$
+Thus we need a function that maps">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-03-28T02:24:29+08:00">
+    <meta property="article:modified_time" content="2026-03-28T02:24:29+08:00">
+    <meta property="article:tag" content="Machine Learning">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ML-2 Note: Linear Models for Classification and GLMs">
+  <meta name="twitter:description" content="ML-2 Note: Linear Models for Classification and GLMs 1. Why Classification Uses Logistic Regression In classification problems, the target variable is discrete.
+Binary classification example:
+$$y \in { 0,1 }$$
+Given input features
+$$x \in \mathbb{R}^d$$
+we want to model
+$$P(y=1|x)$$
+Problem with Linear Regression A linear model predicts
+$$f(x) = w^T x$$
+but
+$$w^T x \in (-\infty, \infty)$$
+while probabilities must satisfy
+$$P(y=1|x) \in [0,1]$$
+Thus we need a function that maps">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/blog/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "ML-2 Note: Linear Models for Classification and GLMs",
+      "item": "http://localhost:1313/blog/posts/ml/ml---2/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ML-2 Note: Linear Models for Classification and GLMs",
+  "name": "ML-2 Note: Linear Models for Classification and GLMs",
+  "description": "ML-2 Note: Linear Models for Classification and GLMs 1. Why Classification Uses Logistic Regression In classification problems, the target variable is discrete.\nBinary classification example:\n$$y \\in { 0,1 }$$\nGiven input features\n$$x \\in \\mathbb{R}^d$$\nwe want to model\n$$P(y=1|x)$$\nProblem with Linear Regression A linear model predicts\n$$f(x) = w^T x$$\nbut\n$$w^T x \\in (-\\infty, \\infty)$$\nwhile probabilities must satisfy\n$$P(y=1|x) \\in [0,1]$$\nThus we need a function that maps\n",
+  "keywords": [
+    "Machine Learning"
+  ],
+  "articleBody": "ML-2 Note: Linear Models for Classification and GLMs 1. Why Classification Uses Logistic Regression In classification problems, the target variable is discrete.\nBinary classification example:\n$$y \\in { 0,1 }$$\nGiven input features\n$$x \\in \\mathbb{R}^d$$\nwe want to model\n$$P(y=1|x)$$\nProblem with Linear Regression A linear model predicts\n$$f(x) = w^T x$$\nbut\n$$w^T x \\in (-\\infty, \\infty)$$\nwhile probabilities must satisfy\n$$P(y=1|x) \\in [0,1]$$\nThus we need a function that maps\n$$(-\\infty,\\infty) \\rightarrow (0,1)$$\nLogistic Function The logistic (sigmoid) function provides this mapping\n$$\\sigma(z) = \\frac{1}{1 + e^{-z}}$$\nTherefore we define the logistic regression model\n$$P(y=1|x) = \\sigma(w^T x)$$\nThis ensures predictions are valid probabilities.\n2. Binary Logistic Regression 2.1 Model The model assumes\n$$P(y=1|x) = \\sigma(w^T x)$$\n$$P(y=0|x) = 1 - \\sigma(w^T x)$$\nEquivalently,\n$$P(y|x) = \\sigma(w^T x)^y (1-\\sigma(w^T x))^{1-y}$$\nThis corresponds to a Bernoulli distribution.\n2.2 Negative Log Likelihood (NLL) Given dataset\n$${(x_i,y_i)}_{i=1}^{n}$$\nLikelihood:\n$$L(w) = \\prod_{i=1}^{n} \\sigma(w^T x_i)^{y_i} (1-\\sigma(w^T x_i))^{1-y_i}$$\nTake log likelihood\n$$\\log L(w) = \\sum_{i=1}^{n} \\left[ y_i \\log \\sigma(w^T x_i) + (1-y_i)\\log(1-\\sigma(w^T x_i)) \\right]$$\nTraining maximizes likelihood or equivalently minimizes Negative Log Likelihood\n$$\\mathcal{L}(w) = - \\sum_{i=1}^{n} \\left[ y_i \\log \\hat y_i + (1-y_i)\\log(1-\\hat y_i) \\right]$$\nwhere\n$$\\hat y_i = \\sigma(w^T x_i)$$\nThis is the binary cross-entropy loss.\n2.3 Connection to KL Divergence Let\n$q(y|x)$ be the true distribution $p(y|x;w)$ be the model distribution The KL divergence is\n$$D_{KL}(q||p) = \\sum_y q(y|x) \\log \\frac{q(y|x)}{p(y|x;w)}$$\nExpanding:\n$$D_{KL}(q||p) = - \\sum_y q(y|x)\\log p(y|x;w) + \\sum_y q(y|x)\\log q(y|x)$$\nThe second term does not depend on $w$.\nTherefore minimizing KL divergence is equivalent to minimizing\n$$- \\sum_y q(y|x)\\log p(y|x;w)$$\nwhich is exactly the negative log likelihood.\nThus\n$$\\text{Minimize NLL} \\quad \\Longleftrightarrow \\quad \\text{Minimize KL divergence}$$\n2.4 Training via Gradient Define\n$$z_i = w^T x_i$$\n$$\\hat y_i = \\sigma(z_i)$$\nLoss:\n$$\\mathcal{L}(w) = - \\sum_{i=1}^{n} [ y_i\\log \\hat y_i + (1-y_i)\\log(1-\\hat y_i) ]$$\nCompute gradient:\n$$\\frac{\\partial \\mathcal{L}}{\\partial w} = - \\sum_{i=1}^{n} (y_i-\\hat y_i)x_i$$\nThus\n$$\\nabla_w \\mathcal{L} = \\sum_{i=1}^{n} (\\hat y_i-y_i)x_i$$\nThis leads to gradient descent update\n$$w \\leftarrow w - \\eta \\nabla_w \\mathcal{L}$$\nInterpretation:\nTraining adjusts $w$ so that predicted probabilities match observed labels.\n3. Multiclass Classification For $K$ classes\n$$y \\in {1,2,\\dots,K}$$\nWe assign a linear score to each class\n$$z_k = w_k^T x$$\nThese scores are converted to probabilities using the Softmax function\n$$P(y=k|x) = \\frac{e^{z_k}}{\\sum_{j=1}^{K} e^{z_j}}$$\nor\n$$P(y=k|x) = \\frac{e^{w_k^T x}}{\\sum_{j=1}^{K} e^{w_j^T x}}$$\nThis ensures\n$$\\sum_{k=1}^{K} P(y=k|x) = 1$$\nTraining again uses negative log likelihood\n$$\\mathcal{L} = -\\sum_{i=1}^{n} \\log P(y_i|x_i)$$\nThis model is known as Softmax Regression or Multinomial Logistic Regression.\n4. Exponential Family of Distributions Many probability distributions belong to the exponential family.\nGeneral form:\n$$p(y|\\eta) = h(y) \\exp \\left( \\eta^T T(y) - A(\\eta) \\right)$$\nComponents:\n1. $T(y)$ — Sufficient Statistic Captures all relevant information from data about the parameter.\n2. $\\eta$ — Natural Parameter Parameterization of the distribution used in the exponential form.\n3. $A(\\eta)$ — Log Partition Function Ensures the distribution is normalized:\n$$\\int p(y|\\eta)dy = 1$$\nAlso determines the mean and variance.\n4. $h(y)$ — Base Measure Depends only on the data, not the parameters.\n4.1 Gaussian Distribution as Exponential Family Gaussian distribution\n$$p(y|\\mu,\\sigma^2) = \\frac{1}{\\sqrt{2\\pi\\sigma^2}} \\exp \\left( -\\frac{(y-\\mu)^2}{2\\sigma^2} \\right)$$\nRewrite in exponential family form:\nNatural parameter\n$$\\eta = \\frac{\\mu}{\\sigma^2}$$\nSufficient statistic\n$$T(y) = y$$\nLog partition function\n$$A(\\eta) = \\frac{\\mu^2}{2\\sigma^2}$$\nThus Gaussian distribution belongs to the exponential family.\n4.2 Bernoulli Distribution as Exponential Family Bernoulli distribution\n$$p(y|\\phi) = \\phi^y (1-\\phi)^{1-y}$$\nRewrite:\n$$p(y|\\eta) = \\exp \\left( y\\eta - \\log(1+e^\\eta) \\right)$$\nwhere\n$$\\eta = \\log\\frac{\\phi}{1-\\phi}$$\nThus\nSufficient statistic\n$$T(y) = y$$\nLog partition function\n$$A(\\eta) = \\log(1+e^\\eta)$$\nThis form directly leads to logistic regression.\n5. Generalized Linear Models (GLMs) GLMs extend linear models to distributions in the exponential family.\nA GLM consists of three components.\n1. Random Component Response variable follows an exponential family distribution\n$$y \\sim p(y|\\eta)$$\n2. Linear Predictor A linear combination of features\n$$z = w^T x$$\n3. Link Function Relates the mean of the distribution to the linear predictor\n$$g(\\mathbb{E}[y|x]) = w^T x$$\nor\n$$\\mathbb{E}[y|x] = g^{-1}(w^T x)$$\n5.1 Examples of GLMs Linear Regression Distribution: Gaussian\nLink function:\n$$\\mathbb{E}[y|x] = w^T x$$\nLogistic Regression Distribution: Bernoulli\nLink function:\n$$\\log\\frac{p}{1-p} = w^T x$$\nInverse link\n$$p = \\sigma(w^T x)$$\n",
+  "wordCount" : "689",
+  "inLanguage": "en",
+  "datePublished": "2026-03-28T02:24:29+08:00",
+  "dateModified": "2026-03-28T02:24:29+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Mike"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/blog/posts/ml/ml---2/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Mike's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/MikeOgilvy/blog/refs/heads/main/static/images/logo.jpg"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/blog/" accesskey="h" title="Mike&#39;s Blog (Alt + H)">Mike&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/blog/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/blog/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/blog/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/blog/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/blog/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/blog/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/blog/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      ML-2 Note: Linear Models for Classification and GLMs
+    </h1>
+    <div class="post-meta"><span title='2026-03-28 02:24:29 +0800 CST'>March 28, 2026</span>&nbsp;·&nbsp;<span>Mike</span>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#ml-2-note-linear-models-for-classification-and-glms" aria-label="ML-2 Note: Linear Models for Classification and GLMs">ML-2 Note: Linear Models for Classification and GLMs</a><ul>
+                        
+                <li>
+                    <a href="#1-why-classification-uses-logistic-regression" aria-label="1. Why Classification Uses Logistic Regression">1. Why Classification Uses Logistic Regression</a><ul>
+                        
+                <li>
+                    <a href="#problem-with-linear-regression" aria-label="Problem with Linear Regression">Problem with Linear Regression</a></li>
+                <li>
+                    <a href="#logistic-function" aria-label="Logistic Function">Logistic Function</a></li></ul>
+                </li>
+                <li>
+                    <a href="#2-binary-logistic-regression" aria-label="2. Binary Logistic Regression">2. Binary Logistic Regression</a><ul>
+                        
+                <li>
+                    <a href="#21-model" aria-label="2.1 Model">2.1 Model</a></li>
+                <li>
+                    <a href="#22-negative-log-likelihood-nll" aria-label="2.2 Negative Log Likelihood (NLL)">2.2 Negative Log Likelihood (NLL)</a></li>
+                <li>
+                    <a href="#23-connection-to-kl-divergence" aria-label="2.3 Connection to KL Divergence">2.3 Connection to KL Divergence</a></li>
+                <li>
+                    <a href="#24-training-via-gradient" aria-label="2.4 Training via Gradient">2.4 Training via Gradient</a></li></ul>
+                </li>
+                <li>
+                    <a href="#3-multiclass-classification" aria-label="3. Multiclass Classification">3. Multiclass Classification</a></li>
+                <li>
+                    <a href="#4-exponential-family-of-distributions" aria-label="4. Exponential Family of Distributions">4. Exponential Family of Distributions</a><ul>
+                        
+                <li>
+                    <a href="#1-ty--sufficient-statistic" aria-label="1. $T(y)$ — Sufficient Statistic">1. $T(y)$ — Sufficient Statistic</a></li>
+                <li>
+                    <a href="#2-eta--natural-parameter" aria-label="2. $\eta$ — Natural Parameter">2. $\eta$ — Natural Parameter</a></li>
+                <li>
+                    <a href="#3-aeta--log-partition-function" aria-label="3. $A(\eta)$ — Log Partition Function">3. $A(\eta)$ — Log Partition Function</a></li>
+                <li>
+                    <a href="#4-hy--base-measure" aria-label="4. $h(y)$ — Base Measure">4. $h(y)$ — Base Measure</a></li>
+                <li>
+                    <a href="#41-gaussian-distribution-as-exponential-family" aria-label="4.1 Gaussian Distribution as Exponential Family">4.1 Gaussian Distribution as Exponential Family</a></li>
+                <li>
+                    <a href="#42-bernoulli-distribution-as-exponential-family" aria-label="4.2 Bernoulli Distribution as Exponential Family">4.2 Bernoulli Distribution as Exponential Family</a></li></ul>
+                </li>
+                <li>
+                    <a href="#5-generalized-linear-models-glms" aria-label="5. Generalized Linear Models (GLMs)">5. Generalized Linear Models (GLMs)</a><ul>
+                        
+                <li>
+                    <a href="#1-random-component" aria-label="1. Random Component">1. Random Component</a></li>
+                <li>
+                    <a href="#2-linear-predictor" aria-label="2. Linear Predictor">2. Linear Predictor</a></li>
+                <li>
+                    <a href="#3-link-function" aria-label="3. Link Function">3. Link Function</a></li>
+                <li>
+                    <a href="#51-examples-of-glms" aria-label="5.1 Examples of GLMs">5.1 Examples of GLMs</a></li>
+                <li>
+                    <a href="#linear-regression" aria-label="Linear Regression">Linear Regression</a></li>
+                <li>
+                    <a href="#logistic-regression" aria-label="Logistic Regression">Logistic Regression</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="ml-2-note-linear-models-for-classification-and-glms">ML-2 Note: Linear Models for Classification and GLMs<a hidden class="anchor" aria-hidden="true" href="#ml-2-note-linear-models-for-classification-and-glms">#</a></h1>
+<h2 id="1-why-classification-uses-logistic-regression">1. Why Classification Uses Logistic Regression<a hidden class="anchor" aria-hidden="true" href="#1-why-classification-uses-logistic-regression">#</a></h2>
+<p>In classification problems, the target variable is discrete.</p>
+<p>Binary classification example:</p>
+<p>$$y \in { 0,1 }$$</p>
+<p>Given input features</p>
+<p>$$x \in \mathbb{R}^d$$</p>
+<p>we want to model</p>
+<p>$$P(y=1|x)$$</p>
+<h3 id="problem-with-linear-regression">Problem with Linear Regression<a hidden class="anchor" aria-hidden="true" href="#problem-with-linear-regression">#</a></h3>
+<p>A linear model predicts</p>
+<p>$$f(x) = w^T x$$</p>
+<p>but</p>
+<p>$$w^T x \in (-\infty, \infty)$$</p>
+<p>while probabilities must satisfy</p>
+<p>$$P(y=1|x) \in [0,1]$$</p>
+<p>Thus we need a function that maps</p>
+<p>$$(-\infty,\infty) \rightarrow (0,1)$$</p>
+<h3 id="logistic-function">Logistic Function<a hidden class="anchor" aria-hidden="true" href="#logistic-function">#</a></h3>
+<p>The logistic (sigmoid) function provides this mapping</p>
+<p>$$\sigma(z) = \frac{1}{1 + e^{-z}}$$</p>
+<p>Therefore we define the <strong>logistic regression model</strong></p>
+<p>$$P(y=1|x) = \sigma(w^T x)$$</p>
+<p>This ensures predictions are valid probabilities.</p>
+<hr>
+<h2 id="2-binary-logistic-regression">2. Binary Logistic Regression<a hidden class="anchor" aria-hidden="true" href="#2-binary-logistic-regression">#</a></h2>
+<h3 id="21-model">2.1 Model<a hidden class="anchor" aria-hidden="true" href="#21-model">#</a></h3>
+<p>The model assumes</p>
+<p>$$P(y=1|x) = \sigma(w^T x)$$</p>
+<p>$$P(y=0|x) = 1 - \sigma(w^T x)$$</p>
+<p>Equivalently,</p>
+<p>$$P(y|x) = \sigma(w^T x)^y (1-\sigma(w^T x))^{1-y}$$</p>
+<p>This corresponds to a <strong>Bernoulli distribution</strong>.</p>
+<hr>
+<h3 id="22-negative-log-likelihood-nll">2.2 Negative Log Likelihood (NLL)<a hidden class="anchor" aria-hidden="true" href="#22-negative-log-likelihood-nll">#</a></h3>
+<p>Given dataset</p>
+<p>$${(x_i,y_i)}_{i=1}^{n}$$</p>
+<p>Likelihood:</p>
+<p>$$L(w) = \prod_{i=1}^{n} \sigma(w^T x_i)^{y_i} (1-\sigma(w^T x_i))^{1-y_i}$$</p>
+<p>Take log likelihood</p>
+<p>$$\log L(w) = \sum_{i=1}^{n} \left[ y_i \log \sigma(w^T x_i) + (1-y_i)\log(1-\sigma(w^T x_i)) \right]$$</p>
+<p>Training maximizes likelihood or equivalently minimizes <strong>Negative Log Likelihood</strong></p>
+<p>$$\mathcal{L}(w) = - \sum_{i=1}^{n} \left[ y_i \log \hat y_i + (1-y_i)\log(1-\hat y_i) \right]$$</p>
+<p>where</p>
+<p>$$\hat y_i = \sigma(w^T x_i)$$</p>
+<p>This is the <strong>binary cross-entropy loss</strong>.</p>
+<hr>
+<h3 id="23-connection-to-kl-divergence">2.3 Connection to KL Divergence<a hidden class="anchor" aria-hidden="true" href="#23-connection-to-kl-divergence">#</a></h3>
+<p>Let</p>
+<ul>
+<li>$q(y|x)$ be the true distribution</li>
+<li>$p(y|x;w)$ be the model distribution</li>
+</ul>
+<p>The KL divergence is</p>
+<p>$$D_{KL}(q||p) = \sum_y q(y|x) \log \frac{q(y|x)}{p(y|x;w)}$$</p>
+<p>Expanding:</p>
+<p>$$D_{KL}(q||p) = - \sum_y q(y|x)\log p(y|x;w) + \sum_y q(y|x)\log q(y|x)$$</p>
+<p>The second term does not depend on $w$.</p>
+<p>Therefore minimizing KL divergence is equivalent to minimizing</p>
+<p>$$- \sum_y q(y|x)\log p(y|x;w)$$</p>
+<p>which is exactly the <strong>negative log likelihood</strong>.</p>
+<p>Thus</p>
+<p>$$\text{Minimize NLL} \quad \Longleftrightarrow \quad \text{Minimize KL divergence}$$</p>
+<hr>
+<h3 id="24-training-via-gradient">2.4 Training via Gradient<a hidden class="anchor" aria-hidden="true" href="#24-training-via-gradient">#</a></h3>
+<p>Define</p>
+<p>$$z_i = w^T x_i$$</p>
+<p>$$\hat y_i = \sigma(z_i)$$</p>
+<p>Loss:</p>
+<p>$$\mathcal{L}(w) = - \sum_{i=1}^{n} [ y_i\log \hat y_i + (1-y_i)\log(1-\hat y_i) ]$$</p>
+<p>Compute gradient:</p>
+<p>$$\frac{\partial \mathcal{L}}{\partial w} = - \sum_{i=1}^{n} (y_i-\hat y_i)x_i$$</p>
+<p>Thus</p>
+<p>$$\nabla_w \mathcal{L} = \sum_{i=1}^{n} (\hat y_i-y_i)x_i$$</p>
+<p>This leads to gradient descent update</p>
+<p>$$w \leftarrow w - \eta \nabla_w \mathcal{L}$$</p>
+<p>Interpretation:</p>
+<p>Training adjusts $w$ so that predicted probabilities match observed labels.</p>
+<hr>
+<h2 id="3-multiclass-classification">3. Multiclass Classification<a hidden class="anchor" aria-hidden="true" href="#3-multiclass-classification">#</a></h2>
+<p>For $K$ classes</p>
+<p>$$y \in {1,2,\dots,K}$$</p>
+<p>We assign a linear score to each class</p>
+<p>$$z_k = w_k^T x$$</p>
+<p>These scores are converted to probabilities using the <strong>Softmax function</strong></p>
+<p>$$P(y=k|x) = \frac{e^{z_k}}{\sum_{j=1}^{K} e^{z_j}}$$</p>
+<p>or</p>
+<p>$$P(y=k|x) = \frac{e^{w_k^T x}}{\sum_{j=1}^{K} e^{w_j^T x}}$$</p>
+<p>This ensures</p>
+<p>$$\sum_{k=1}^{K} P(y=k|x) = 1$$</p>
+<p>Training again uses <strong>negative log likelihood</strong></p>
+<p>$$\mathcal{L} = -\sum_{i=1}^{n} \log P(y_i|x_i)$$</p>
+<p>This model is known as <strong>Softmax Regression</strong> or <strong>Multinomial Logistic Regression</strong>.</p>
+<hr>
+<h2 id="4-exponential-family-of-distributions">4. Exponential Family of Distributions<a hidden class="anchor" aria-hidden="true" href="#4-exponential-family-of-distributions">#</a></h2>
+<p>Many probability distributions belong to the <strong>exponential family</strong>.</p>
+<p>General form:</p>
+<p>$$p(y|\eta) = h(y) \exp \left( \eta^T T(y) - A(\eta) \right)$$</p>
+<p>Components:</p>
+<h3 id="1-ty--sufficient-statistic">1. $T(y)$ — Sufficient Statistic<a hidden class="anchor" aria-hidden="true" href="#1-ty--sufficient-statistic">#</a></h3>
+<p>Captures all relevant information from data about the parameter.</p>
+<h3 id="2-eta--natural-parameter">2. $\eta$ — Natural Parameter<a hidden class="anchor" aria-hidden="true" href="#2-eta--natural-parameter">#</a></h3>
+<p>Parameterization of the distribution used in the exponential form.</p>
+<h3 id="3-aeta--log-partition-function">3. $A(\eta)$ — Log Partition Function<a hidden class="anchor" aria-hidden="true" href="#3-aeta--log-partition-function">#</a></h3>
+<p>Ensures the distribution is normalized:</p>
+<p>$$\int p(y|\eta)dy = 1$$</p>
+<p>Also determines the mean and variance.</p>
+<h3 id="4-hy--base-measure">4. $h(y)$ — Base Measure<a hidden class="anchor" aria-hidden="true" href="#4-hy--base-measure">#</a></h3>
+<p>Depends only on the data, not the parameters.</p>
+<hr>
+<h3 id="41-gaussian-distribution-as-exponential-family">4.1 Gaussian Distribution as Exponential Family<a hidden class="anchor" aria-hidden="true" href="#41-gaussian-distribution-as-exponential-family">#</a></h3>
+<p>Gaussian distribution</p>
+<p>$$p(y|\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp \left( -\frac{(y-\mu)^2}{2\sigma^2} \right)$$</p>
+<p>Rewrite in exponential family form:</p>
+<p>Natural parameter</p>
+<p>$$\eta = \frac{\mu}{\sigma^2}$$</p>
+<p>Sufficient statistic</p>
+<p>$$T(y) = y$$</p>
+<p>Log partition function</p>
+<p>$$A(\eta) = \frac{\mu^2}{2\sigma^2}$$</p>
+<p>Thus Gaussian distribution belongs to the exponential family.</p>
+<hr>
+<h3 id="42-bernoulli-distribution-as-exponential-family">4.2 Bernoulli Distribution as Exponential Family<a hidden class="anchor" aria-hidden="true" href="#42-bernoulli-distribution-as-exponential-family">#</a></h3>
+<p>Bernoulli distribution</p>
+<p>$$p(y|\phi) = \phi^y (1-\phi)^{1-y}$$</p>
+<p>Rewrite:</p>
+<p>$$p(y|\eta) = \exp \left( y\eta - \log(1+e^\eta) \right)$$</p>
+<p>where</p>
+<p>$$\eta = \log\frac{\phi}{1-\phi}$$</p>
+<p>Thus</p>
+<p>Sufficient statistic</p>
+<p>$$T(y) = y$$</p>
+<p>Log partition function</p>
+<p>$$A(\eta) = \log(1+e^\eta)$$</p>
+<p>This form directly leads to <strong>logistic regression</strong>.</p>
+<hr>
+<h2 id="5-generalized-linear-models-glms">5. Generalized Linear Models (GLMs)<a hidden class="anchor" aria-hidden="true" href="#5-generalized-linear-models-glms">#</a></h2>
+<p>GLMs extend linear models to distributions in the exponential family.</p>
+<p>A GLM consists of three components.</p>
+<h3 id="1-random-component">1. Random Component<a hidden class="anchor" aria-hidden="true" href="#1-random-component">#</a></h3>
+<p>Response variable follows an exponential family distribution</p>
+<p>$$y \sim p(y|\eta)$$</p>
+<h3 id="2-linear-predictor">2. Linear Predictor<a hidden class="anchor" aria-hidden="true" href="#2-linear-predictor">#</a></h3>
+<p>A linear combination of features</p>
+<p>$$z = w^T x$$</p>
+<h3 id="3-link-function">3. Link Function<a hidden class="anchor" aria-hidden="true" href="#3-link-function">#</a></h3>
+<p>Relates the mean of the distribution to the linear predictor</p>
+<p>$$g(\mathbb{E}[y|x]) = w^T x$$</p>
+<p>or</p>
+<p>$$\mathbb{E}[y|x] = g^{-1}(w^T x)$$</p>
+<hr>
+<h3 id="51-examples-of-glms">5.1 Examples of GLMs<a hidden class="anchor" aria-hidden="true" href="#51-examples-of-glms">#</a></h3>
+<h3 id="linear-regression">Linear Regression<a hidden class="anchor" aria-hidden="true" href="#linear-regression">#</a></h3>
+<p>Distribution: Gaussian</p>
+<p>Link function:</p>
+<p>$$\mathbb{E}[y|x] = w^T x$$</p>
+<hr>
+<h3 id="logistic-regression">Logistic Regression<a hidden class="anchor" aria-hidden="true" href="#logistic-regression">#</a></h3>
+<p>Distribution: Bernoulli</p>
+<p>Link function:</p>
+<p>$$\log\frac{p}{1-p} = w^T x$$</p>
+<p>Inverse link</p>
+<p>$$p = \sigma(w^T x)$$</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/blog/tags/machine-learning/">Machine Learning</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="http://localhost:1313/blog/posts/ml/ml---1/">
+    <span class="title">Next »</span>
+    <br>
+    <span>ML-1 Note: Supervised Learning; Linear Regression</span>
+  </a>
+</nav>
+
+  </footer><script src="https://giscus.app/client.js"
+        data-repo="MikeOgilvy/blog"
+        data-repo-id="R_kgDORiHktA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDORiHktM4C4Ege"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/blog/">Mike&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a><script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const text = "Recording life, technology and essays"; 
+        const speed = 100; 
+        const target = document.querySelector(".header-description") || document.querySelector(".description");
+        
+        if (target) {
+            target.innerHTML = '<span class="typing-text"></span><span class="typing-cursor"></span>';
+            const textContainer = target.querySelector(".typing-text");
+            let i = 0;
+
+            function typeWriter() {
+                if (i < text.length) {
+                    textContainer.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+            }
+            typeWriter();
+        }
+    });
+</script>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -49,6 +49,7 @@ url = "https://t.me/MikeOgilvy"
 name = "Email"
 url = "mailto:mikeogilvy25@gmail.com"
 
+
 [params.assets]
     favicon = "https://raw.githubusercontent.com/MikeOgilvy/blog/refs/heads/main/static/images/logo.jpg"
 
@@ -59,7 +60,6 @@ url = "mailto:mikeogilvy25@gmail.com"
     distance = 1000
     threshold = 0.4
     minMatchCharLength = 2
-    # 关键：设置权重。Title 权重最高，Content 权重低一些
     keys = ["title", "permalink", "summary", "content"]
 
 
@@ -82,14 +82,14 @@ url = "mailto:mikeogilvy25@gmail.com"
     weight = 40
 
 [[menu.main]]
-    identifier = "ahome"
+    identifier = "home"
     name = "Home"
     url = "/"
     weight = 10
 
 [[menu.main]]
     identifier = "archives"
-    name = "Archive" # 或者叫 "归档"
+    name = "Archive" 
     url = "/archives/"
     weight = 25
 

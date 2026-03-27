@@ -6,8 +6,31 @@
     <description>Recent content in Machine Learning on Mike&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 22 Mar 2026 03:32:29 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2026 02:24:29 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/blog/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ML-2 Note: Linear Models for Classification and GLMs</title>
+      <link>http://localhost:1313/blog/posts/ml/ml---2/</link>
+      <pubDate>Sat, 28 Mar 2026 02:24:29 +0800</pubDate>
+      <guid>http://localhost:1313/blog/posts/ml/ml---2/</guid>
+      <description>&lt;h1 id=&#34;ml-2-note-linear-models-for-classification-and-glms&#34;&gt;ML-2 Note: Linear Models for Classification and GLMs&lt;/h1&gt;
+&lt;h2 id=&#34;1-why-classification-uses-logistic-regression&#34;&gt;1. Why Classification Uses Logistic Regression&lt;/h2&gt;
+&lt;p&gt;In classification problems, the target variable is discrete.&lt;/p&gt;
+&lt;p&gt;Binary classification example:&lt;/p&gt;
+&lt;p&gt;$$y \in {0,1}$$&lt;/p&gt;
+&lt;p&gt;Given input features&lt;/p&gt;
+&lt;p&gt;$$x \in \mathbb{R}^d$$&lt;/p&gt;
+&lt;p&gt;we want to model&lt;/p&gt;
+&lt;p&gt;$$P(y=1|x)$$&lt;/p&gt;
+&lt;h3 id=&#34;problem-with-linear-regression&#34;&gt;Problem with Linear Regression&lt;/h3&gt;
+&lt;p&gt;A linear model predicts&lt;/p&gt;
+&lt;p&gt;$$f(x) = w^T x$$&lt;/p&gt;
+&lt;p&gt;but&lt;/p&gt;
+&lt;p&gt;$$w^T x \in (-\infty, \infty)$$&lt;/p&gt;
+&lt;p&gt;while probabilities must satisfy&lt;/p&gt;
+&lt;p&gt;$$P(y=1|x) \in [0,1]$$&lt;/p&gt;
+&lt;p&gt;Thus we need a function that maps&lt;/p&gt;</description>
+    </item>
     <item>
       <title>ML-1 Note: Supervised Learning; Linear Regression</title>
       <link>http://localhost:1313/blog/posts/ml/ml---1/</link>
