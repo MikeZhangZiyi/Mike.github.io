@@ -17,7 +17,7 @@
 &lt;h2 id=&#34;1-why-classification-uses-logistic-regression&#34;&gt;1. Why Classification Uses Logistic Regression&lt;/h2&gt;
 &lt;p&gt;In classification problems, the target variable is discrete.&lt;/p&gt;
 &lt;p&gt;Binary classification example:&lt;/p&gt;
-&lt;p&gt;$$y \in { 0,1 }$$&lt;/p&gt;
+&lt;p&gt;$$y \in \left\{ 0,1 \right\}$$&lt;/p&gt;
 &lt;p&gt;Given input features&lt;/p&gt;
 &lt;p&gt;$$x \in \mathbb{R}^d$$&lt;/p&gt;
 &lt;p&gt;we want to model&lt;/p&gt;
