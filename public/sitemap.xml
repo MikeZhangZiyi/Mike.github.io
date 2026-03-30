@@ -2,13 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/blog/friends/</loc>
-    <lastmod>2026-03-30T00:00:00+00:00</lastmod>
+    <loc>http://localhost:1313/blog/tags/machine-learning/</loc>
+    <lastmod>2026-03-28T02:24:29+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/</loc>
-    <lastmod>2026-03-30T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/blog/tags/machine-learning/</loc>
     <lastmod>2026-03-28T02:24:29+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/posts/ml/ml---2/</loc>
@@ -35,6 +32,8 @@
     <loc>http://localhost:1313/blog/archives/</loc>
   </url><url>
     <loc>http://localhost:1313/blog/categories/</loc>
+  </url><url>
+    <loc>http://localhost:1313/blog/friends/</loc>
   </url><url>
     <loc>http://localhost:1313/blog/search/</loc>
   </url>
