@@ -274,20 +274,40 @@
     document.addEventListener("DOMContentLoaded", function() {
         const text = "Recording life, technology and essays"; 
         const target = document.querySelector(".header-description") || document.querySelector(".description");
+        
         if (target) {
             target.innerHTML = '<span class="typing-text"></span><span class="typing-cursor"></span>';
             const textContainer = target.querySelector(".typing-text");
             let i = 0;
+            const speed = 100;
+
             function typeWriter() {
                 if (i < text.length) {
-                    textContainer.innerHTML += text.charAt(i); i++;
-                    setTimeout(typeWriter, 100);
+                    textContainer.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
                 }
             }
             typeWriter();
         }
     });
 </script>
+
+<style>
+    .typing-cursor {
+        display: inline-block;
+        width: 2px;
+        height: 1em;
+        background-color: var(--primary);
+        margin-left: 4px;
+        animation: blink 0.7s infinite;
+        vertical-align: middle;
+    }
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+</style>
 
 <script>
     let menu = document.getElementById('menu');

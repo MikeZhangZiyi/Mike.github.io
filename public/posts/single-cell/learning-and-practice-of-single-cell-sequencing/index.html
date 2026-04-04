@@ -516,34 +516,81 @@ Single-cell RNA sequencing (scRNA-seq) has become an essential technique for stu
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
         <path d="M12 6H0l6-6z" />
     </svg>
-</a><aside class="floating-profile">
-    <a href="/">
-        <img src="http://localhost:1313/blog/" alt="Avatar">
-    </a>
-    <h3>Mike</h3>
-    <p>Recording life, technology and essays</p>
-    <div class="floating-social">
-        <a href="https://github.com/MikeOgilvy">Github</a>
-        <a href="mailto:mikeogilvy25@gmail.com">Email</a>
+</a><aside id="dynamic-profile" class="floating-profile" style="visibility: hidden; position: fixed !important; z-index: 999999 !important;">
+    <div class="profile-content">
+        <a href="/" title="Home">
+            <img src="/blog/Avater.jpg" 
+                 alt="Avatar" 
+                 style="width: 85px !important; height: 85px !important; object-fit: cover; border-radius: 50% !important; display: block; margin: 0 auto 10px;">
+        </a>
+        <h3 style="margin: 12px 0 5px; font-size: 1.1rem; text-align: center;">Mike Ogilvy</h3>
+        <p style="font-size: 1rem; color: #888; text-align: center; line-height: 1.4; padding: 0 10px;">Recording life, technology and essays</p>
+        
+        <div class="floating-social" style="display: flex; gap: 12px; justify-content: center; margin-top: 20px; margin-bottom: 20px;">
+            <a href="https://github.com/MikeOgilvy" target="_blank" rel="noopener noreferrer" title="github" style="color: var(--secondary); transition: 0.2s;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            <a href="https://x.com/MikeOgilvy94" target="_blank" rel="noopener noreferrer" title="X" style="color: var(--secondary); transition: 0.2s;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"></path><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path></svg></a>
+            <a href="https://t.me/MikeOgilvy" target="_blank" rel="noopener noreferrer" title="Telegram" style="color: var(--secondary); transition: 0.2s;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></a>
+            <a href="mailto:mikeogilvy25@gmail.com" target="_blank" rel="noopener noreferrer" title="Email" style="color: var(--secondary); transition: 0.2s;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
+        </div>
+
+        <div class="profile-calendar" style="margin: 15px auto 5px; width: 75px; background: var(--theme); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); user-select: none;">
+            <div id="cal-month" style="background: #ff4d4d; color: white; font-size: 0.65rem; padding: 3px 0; text-transform: uppercase; font-weight: bold; text-align: center; letter-spacing: 0.5px;"></div>
+            <div id="cal-day" style="font-size: 1.6rem; font-weight: 800; color: var(--primary); padding: 4px 0; text-align: center; line-height: 1;"></div>
+            <div id="cal-week" style="font-size: 0.6rem; color: var(--secondary); padding-bottom: 6px; text-align: center; font-weight: 500;"></div>
+        </div>
     </div>
 </aside>
 
 <script>
+    (function() {
+        const profile = document.getElementById("dynamic-profile");
+        if (!profile) return;
+
+        
+        function updateDate() {
+            const now = new Date();
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const weeks = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+            
+            const monthEl = document.getElementById("cal-month");
+            const dayEl = document.getElementById("cal-day");
+            const weekEl = document.getElementById("cal-week");
+            
+            if(monthEl) monthEl.innerText = months[now.getMonth()];
+            if(dayEl) dayEl.innerText = now.getDate();
+            if(weekEl) weekEl.innerText = weeks[now.getDay()];
+        }
+
+        function updatePosition() {
+            const mainContent = document.querySelector(".main");
+            if (!mainContent || window.innerWidth < 1350) {
+                profile.style.visibility = "hidden";
+                return;
+            }
+            const rect = mainContent.getBoundingClientRect();
+            profile.style.left = (rect.left - 240) + "px"; 
+            profile.style.top = "150px";
+            profile.style.width = "200px";
+            profile.style.visibility = "visible";
+        }
+
+        document.body.appendChild(profile);
+        updateDate(); 
+        updatePosition();
+        window.addEventListener("resize", updatePosition);
+    })();
+</script><script>
     document.addEventListener("DOMContentLoaded", function() {
         const text = "Recording life, technology and essays"; 
-        const speed = 100; 
         const target = document.querySelector(".header-description") || document.querySelector(".description");
-        
         if (target) {
             target.innerHTML = '<span class="typing-text"></span><span class="typing-cursor"></span>';
             const textContainer = target.querySelector(".typing-text");
             let i = 0;
-
             function typeWriter() {
                 if (i < text.length) {
-                    textContainer.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, speed);
+                    textContainer.innerHTML += text.charAt(i); i++;
+                    setTimeout(typeWriter, 100);
                 }
             }
             typeWriter();
