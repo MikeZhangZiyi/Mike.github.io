@@ -28,7 +28,7 @@
 
         <div id="mini-calendar" style="width: 175px; margin: 0 auto; background: var(--theme); border: 1px solid var(--border); border-radius: 10px; padding: 10px; box-sizing: border-box;">
             <div id="cal-header" style="text-align: center; font-size: 0.7rem; font-weight: 800; margin-bottom: 10px; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px;"></div>
-            <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 0.6rem; color: #16aa11; font-weight: bold; margin-bottom: 5px;">
+            <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 0.6rem; color: #14b30f; font-weight: bold; margin-bottom: 5px;">
                 <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
             </div>
             <div id="cal-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 0.65rem; color: var(--primary);">
@@ -62,8 +62,7 @@
             }
 
             for (let d = 1; d <= daysInMonth; d++) {
-                // 今日高亮背景色改为 #16aa11
-                const isToday = d === today ? 'background: #16aa11; color: white; border-radius: 4px; font-weight: bold;' : '';
+                const isToday = d === today ? 'background: #14b30f; color: white; border-radius: 4px; font-weight: bold;' : '';
                 grid.innerHTML += `<span style="padding: 2px 0; ${isToday}">${d}</span>`;
             }
         }
