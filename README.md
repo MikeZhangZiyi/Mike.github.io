@@ -36,7 +36,7 @@ A dedicated gallery for visual storytelling.
 
 ## 📬 Links
 
-  * **Blog**: [Your Domain]
+  * **Blog**: [@MyBlog](https://mikeogilvy.github.io/blog)
   * **GitHub**: [@MikeOgilvy](https://github.com/MikeOgilvy)
 
 -----
