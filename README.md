@@ -30,7 +30,7 @@ A dedicated gallery for visual storytelling.
   * **Framework**: [Hugo](https://gohugo.io/) (PaperMod theme)
   * **Deployment**: GitHub Pages
   * **Media Storage**: Cloudflare R2
-  * **Workflow**: Arch Linux / Sway
+  * **Workflow**: Windows / WSL
 
 -----
 
