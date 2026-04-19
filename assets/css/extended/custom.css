@@ -1,0 +1,229 @@
+/* 摄影网格布局 */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.photo-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    aspect-ratio: 3 / 2; /* 统一封面比例，看起来更整齐 */
+    background: #eee;
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+/* 悬停效果：图片放大+显示标题 */
+.photo-item:hover img {
+    transform: scale(1.1);
+}
+
+.photo-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: white;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.photo-item:hover .photo-overlay {
+    opacity: 1;
+}
+
+.photo-overlay h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #fff !important;
+}
+
+/* 让摄影文章内的图片横跨更大区域 */
+.single.photography .post-content img {
+    width: 100vw;
+    max-width: 1200px;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    position: relative;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+    border-radius: 0; /* 大图模式下可以取消圆角，更有电影感 */
+}
+
+/* 针对 14 寸笔记本屏幕的适配 */
+@media screen and (min-width: 1400px) {
+    .single.photography .post-content img {
+        max-width: 1300px;
+    }
+}
+
+/* ================================================================
+   摄影系统最终修正版 - Mike's Photography
+   ================================================================ */
+
+/* 0. 字体引入 */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Noto+Serif+SC:wght@400;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Noto+Serif+SC:wght@400;700&display=swap');
+
+body.photography-wide .post-single, 
+body.photography-wide .post-content,
+body.photography-wide .post-title,
+body.photography-wide .post-meta,
+
+/* 针对列表主页：只改文章列表里的标题和描述 */
+body:has(a[href*="photography"]) .main .entry-header h2,
+body:has(a[href*="photography"]) .main .entry-content,
+body:has(a[href*="photography"]) .main .first-entry .entry-title {
+    font-family: "Playfair Display", "Noto Serif SC", serif !important;
+} */
+
+/* 强制保护：确保导航栏按钮、搜索图标、Logo 维持原样 */
+.header .logo,
+.header .menu,
+.header #menu-button,
+.header .button,
+.footer {
+    font-family: var(--common-font-family), sans-serif !important;
+}
+/* 2. 移除详情页上方顽固空白 */
+/* 彻底抹除封面容器占用的空间 */
+body.photography-wide .post-single .entry-cover,
+body.photography-wide .post-single .post-entry-cover,
+body.photography-wide .post-single figure.entry-cover {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 修正标题上方的间距，让它直接顶上去，不留死角 */
+body.photography-wide .post-header {
+    width: 90% !important;
+    max-width: 750px !important;
+    margin: 20px auto 20px auto !important; /* 顶部从 100px 减小到 40px */
+    text-align: left !important;
+    padding: 0 20px;
+}
+
+/* 3. 画廊组：增加图片之间的间距 */
+body.photography-wide .post-content p:has(img) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;               /* 间距从 15px 增加到 24px，更有呼吸感 */
+    width: 98vw !important;
+    max-width: 1400px !important;
+    margin: 100px auto !important;
+}
+
+/* 4. 图片样式：增加圆角与展示比例 */
+body.photography-wide .post-content p:has(img) img {
+    height: 42vh !important; 
+    min-height: 350px;
+    max-height: 550px;
+    width: auto !important; 
+    object-fit: contain !important; 
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin: 0 !important;
+    
+    /* 增加圆角：从 2px 提升到 12px，更有现代感 */
+    border-radius: 12px !important; 
+    box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* 5. 详情页文字排版：左对齐叙事 */
+body.photography-wide .post-content > p:not(:has(img)),
+body.photography-wide .post-content > blockquote {
+    width: 90% !important;
+    max-width: 750px !important; 
+    margin: 0 auto 2.5rem auto !important; /* 修正间距 */
+    text-align: left !important; 
+    line-height: 2 !important;
+    font-size: 1.15rem;
+    color: #333;
+}
+
+/* 6. 单张图大图模式也增加圆角 */
+body.photography-wide .post-content p:has(img):not(:has(img + img)) img {
+    border-radius: 16px !important; /* 单图圆角稍微再大一点点 */
+    margin: 40px auto !important;
+}
+
+/* 7. 主页列表样式微调：让标题也变好看 */
+body:has([href*="photography"]) .first-entry .entry-title,
+body:has([href*="photography"]) .entry-title {
+    font-family: "Playfair Display", "Noto Serif SC", serif !important;
+}
+
+body.photography-wide .post-content p:has(img):hover img:not(:hover) {
+    filter: brightness(0.8);
+}
+body.photography-wide .post-content p:has(img) img:hover {
+    transform: scale(1.02);
+}
+
+/* 8. 交互细节：悬停增强 */
+body.photography-wide .post-content p:has(img):hover img:not(:hover) {
+    filter: brightness(0.8);
+}
+body.photography-wide .post-content p:has(img) img:hover {
+    transform: scale(1.02);
+}
+
+/* 9. 移动端与 14 寸笔记本适配 */
+@media screen and (max-width: 1280px) {
+    body.photography-wide .post-title { font-size: 2.2rem !important; }
+    body.photography-wide .post-content p:has(img) img { height: 30vh !important; }
+}
+
+body.photography-wide .post-single .entry-cover,
+body.photography-wide .post-single .post-entry-cover,
+body.photography-wide .post-single figure.entry-cover,
+body.photography-wide .post-single > .cover {
+    display: none !important;
+}
+
+/* ================================================================
+   释放 Tags：让底部标签恢复正常排列
+   ================================================================ */
+
+/* 1. 针对详情页底部的 tags 容器进行释放 */
+body.photography-wide .post-footer,
+body.photography-wide .post-tags {
+    width: 90% !important;
+    max-width: 750px !important; /* 宽度与文字对齐 */
+    margin: 40px auto !important; /* 居中 */
+    text-align: center !important; /* 恢复居中对齐 */
+    display: block !important;    /* 撤销之前的 flex 影响 */
+}
+
+/* 2. 确保标签内部的链接（按钮感）恢复 */
+body.photography-wide .post-tags a {
+    display: inline-block !important;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 2px 10px;
+    background: var(--code-bg); /* 恢复背景色 */
+    border-radius: 4px;
+    font-family: var(--common-font-family); /* 标签通常用无衬线体更清爽 */
+    font-size: 14px;
+}
+
+/* 3. 修正：防止之前的文字左对齐逻辑误伤 footer */
+body.photography-wide .post-content + .post-footer {
+    align-items: center !important; 
+}
+

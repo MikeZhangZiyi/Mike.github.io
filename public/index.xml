@@ -6,8 +6,15 @@
     <description>Recent content on Mike&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 28 Mar 2026 02:24:29 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Qingshan Lake</title>
+      <link>http://localhost:1313/blog/photography/qingshanlake/</link>
+      <pubDate>Mon, 06 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/photography/qingshanlake/</guid>
+      <description>A collection of shots from my trip to the Golden State.</description>
+    </item>
     <item>
       <title>ML-2 Note: Linear Models for Classification and GLMs</title>
       <link>http://localhost:1313/blog/posts/ml/ml---2/</link>

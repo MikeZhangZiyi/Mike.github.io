@@ -1,4 +1,4 @@
-{{- if not .IsHome -}}
+{{- if and (not .IsHome) (or (ne .Section "photography") (and (eq .Section "photography") (not .IsPage))) -}}
 <aside id="dynamic-profile" class="floating-profile" style="visibility: hidden; position: fixed !important; z-index: 999999 !important;">
     <div class="profile-content">
         <a href="/" title="Home">
@@ -127,3 +127,38 @@
         50% { opacity: 0; }
     }
 </style>
+
+<script>
+    (function() {
+        const path = window.location.pathname;
+        
+        // 增加判断：只要 body 有 single 类且路径包含 photography
+        if (path.includes('/photography/') && (document.querySelector('.post-single') || document.body.classList.contains('single'))) {
+            
+            document.body.classList.add('photography-wide');
+
+            const fixLayout = () => {
+                // 1. 暴力拆除所有父级容器的宽度限制
+                // 增加 .post-content 以确保它也能突破限制
+                const containers = document.querySelectorAll('.container, .main, .post-single, .post-content');
+                containers.forEach(el => {
+                    el.style.maxWidth = '100% !important'; // 尝试强制覆盖
+                    el.style.setProperty('max-width', '100%', 'important');
+                    el.style.width = '100%';
+                    el.style.margin = '0';
+                    el.style.padding = '0';
+                });
+            };
+
+            // 立即执行一次
+            fixLayout();
+            
+            // 页面加载完成后再执行一次（处理异步图片加载）
+            window.addEventListener('load', fixLayout);
+            
+            // 针对某些主题动态渲染，设置多重定时器保底
+            setTimeout(fixLayout, 100);
+            setTimeout(fixLayout, 1000); 
+        }
+    })();
+</script>

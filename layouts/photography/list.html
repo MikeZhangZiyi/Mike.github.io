@@ -1,0 +1,21 @@
+{{ define "main" }}
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+  {{ if .Description }}<div class="post-description">{{ .Description }}</div>{{ end }}
+</header>
+
+<div class="photo-grid">
+  {{ range .Paginator.Pages }}
+  <article class="photo-item">
+    <a href="{{ .Permalink }}">
+      {{ if .Params.cover.image }}
+      <img src="{{ .Params.cover.image | absURL }}" alt="{{ .Title }}">
+      {{ end }}
+      <div class="photo-overlay">
+        <h2>{{ .Title }}</h2>
+      </div>
+    </a>
+  </article>
+  {{ end }}
+</div>
+{{ end }}

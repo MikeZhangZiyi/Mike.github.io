@@ -10,7 +10,7 @@
 <meta name="description" content="Recording life, technology and essays">
 <meta name="author" content="Mike">
 <link rel="canonical" href="http://localhost:1313/blog/tags/single-cell/">
-<link crossorigin="anonymous" href="/blog/assets/css/stylesheet.a29c24210eb31d9ce56f669c66a35c9c51b17376b7764e336a49af7dec914cf0.css" integrity="sha256-opwkIQ6zHZzlb2acZqNcnFGxc3a3dk4zakmvfeyRTPA=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/blog/assets/css/stylesheet.94260d2142b1e18d0932ce0f891c05a5d726a591af3040849b0ce822184c0a6d.css" integrity="sha256-lCYNIUKx4Y0JMs4PiRwFpdcmpZGvMECEmwzoIhhMCm0=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/ico/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/blog/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/blog/favicon-32x32.png">
@@ -171,6 +171,11 @@
             <li>
                 <a href="http://localhost:1313/blog/posts/" title="Posts">
                     <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/blog/photography/" title="Photography">
+                    <span>Photography</span>
                 </a>
             </li>
             <li>
@@ -344,6 +349,41 @@
         50% { opacity: 0; }
     }
 </style>
+
+<script>
+    (function() {
+        const path = window.location.pathname;
+        
+        
+        if (path.includes('/photography/') && (document.querySelector('.post-single') || document.body.classList.contains('single'))) {
+            
+            document.body.classList.add('photography-wide');
+
+            const fixLayout = () => {
+                
+                
+                const containers = document.querySelectorAll('.container, .main, .post-single, .post-content');
+                containers.forEach(el => {
+                    el.style.maxWidth = '100% !important'; 
+                    el.style.setProperty('max-width', '100%', 'important');
+                    el.style.width = '100%';
+                    el.style.margin = '0';
+                    el.style.padding = '0';
+                });
+            };
+
+            
+            fixLayout();
+            
+            
+            window.addEventListener('load', fixLayout);
+            
+            
+            setTimeout(fixLayout, 100);
+            setTimeout(fixLayout, 1000); 
+        }
+    })();
+</script>
 
 <script>
     let menu = document.getElementById('menu');

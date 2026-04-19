@@ -99,6 +99,11 @@ url = "mailto:mikeogilvy25@gmail.com"
     url = "/friends"
     weight = 30
 
+[[menu.main]]
+    name = "Photography"
+    url = "/photography/"
+    weight = 23
+
 [markup]
   [markup.goldmark.renderer]
     unsafe = true
